@@ -2,6 +2,8 @@
 <html ng-app="App">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="styles/normalize.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="styles/skeleton.css" media="screen" title="no title" charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="/js/ang_core.js">
@@ -10,11 +12,30 @@
     <title></title>
   </head>
   <body>
-    <h1>DANSTAGRAMM</h1>
-    <a href="#">home?</a>
-    <a href="#login">login</a>
-    <main ng-view>
+    <div class="container">
+      <div class="row">
 
-    </main>
+        <nav class="twelve columns">
+
+          <h1>DANSTAGRAMM</h1>
+          <a href="#"><button type="button">home</button></a>
+          <a href="#login"><button type="button">login</button></a>
+          <a href="#upload"><button type="button">upload</button></a>
+          <a href="#update"><button type="button">update info</button></a>
+
+        </nav>
+      </div>
+
+      <div class="row">
+        <main class="twelve columns">
+
+          <!-- our views go here -->
+          <article ng-view></article>
+
+        </main>
+      </div>
+
+    </div><!-- container -->
+
   </body>
 </html>

@@ -1,12 +1,38 @@
 // set up the router
 var express    = require('express'),
-    TestController = express.Router(),
+    App = express.Router(),
     path = require('path');
 
+// set up sessions
+// App.use(express.cookieParser());
+// App.use(express.session({ secret: 'supersecret' }));
+
+
 // set up routes!
-TestController.route('/')
+// This route serves our layout
+// The rest of our views are served via angular in public/js/ang_core
+App.route('/')
   .get(function(req, res, next){
     res.sendFile(path.join(__dirname, '../public/views/layout.html'));
   })
 
-module.exports = TestController;
+App.route('/login')
+  .post(function(req, res, next){
+    // log the user in
+  })
+
+App.route('/signup')
+  .post(function(req, res, next){
+    // save a new login in the database and log the user in
+  })
+
+App.route('/upload')
+  .post(function(req, res, next){
+    // save a new photo in the database
+  })
+
+App.route('/photos')
+  .get(function(req, res, next){
+    // send back a particular photo or all photos in the user's feed
+  })
+module.exports = App;
