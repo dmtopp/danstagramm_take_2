@@ -28,7 +28,9 @@ App.route('/signup')
 
 App.route('/upload')
   .post(function(req, res, next){
-    // save a new photo in the database
+    console.log('The /upload route has recieved a post request!');
+    // save req.body.file in the database
+    res.send("hey thanks!");
   })
 
 App.route('/photos')

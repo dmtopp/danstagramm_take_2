@@ -1,8 +1,19 @@
 <div ng-controller="uploadController">
   <small>{{ message }}</small>
-  <form class="" action="index.html" method="post">
-    <input id="photo" type="file" name="photo">
-    <button type="button" name="submit">Submit</button>
+  <form class="" action="index.html" method="post" name="form">
+
+
+    <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+      ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100">Select</div>
+
+    <button type="button" name="submit" ng-click="submit()">Submit</button>
+
+    <!-- our image preview -->
+    <img ngf-src="file" ngf-resize="{width: 100, height: 100, quality: 1}">
+
+
+
+
     <div id="preview"></div>
   </form>
 </div>
