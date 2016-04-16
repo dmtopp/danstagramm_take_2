@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
+var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
 App.controller('updateController', function($scope, $http, $location){
 

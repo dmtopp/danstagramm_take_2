@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
+var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
 App.config(function($routeProvider, $locationProvider){
   // Map our angular controllers to our different views

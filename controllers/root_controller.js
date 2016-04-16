@@ -1,11 +1,15 @@
 // set up the router
 var express    = require('express'),
-    App = express.Router(),
-    path = require('path');
+    session    = require('express-session'),
+    App        = express.Router(),
+    path       = require('path');
 
 // set up sessions
 // App.use(express.cookieParser());
-// App.use(express.session({ secret: 'supersecret' }));
+App.use(session({ secret: 'supersecret',
+                  resave: false,
+                  saveUninitialized: false }));
+var sess;
 
 // grab our models for the db
 var Photo = require('../models/Photo');
@@ -21,6 +25,8 @@ App.route('/')
 
 App.route('/login')
   .post(function(req, res, next){
+    sess = req.session;
+    console.log(session);
     res.send('log in response!');
     // log the user in
   })
