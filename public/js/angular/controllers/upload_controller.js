@@ -1,8 +1,12 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
-App.controller('uploadController', ['$scope', 'Upload', '$http', function($scope, Upload, $http){
+App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', function($scope, Upload, $http, $cookies){
 
   $scope.message = 'Check out the upload controller!';
+
+  var all = $cookies.getAll();
+
+  // console.log(all);
 
   // submit function triggers on button click
   $scope.submit = function() {

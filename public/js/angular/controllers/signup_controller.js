@@ -1,8 +1,12 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
-App.controller('signupController', function($scope, $http, $location){
+App.controller('signupController', function($scope, $http, $location, $cookies){
 
   $scope.message = "check out the signup controller!"
+
+  var all = $cookies.getAll();
+
+  // console.log(all);
 
   $scope.go = function(route){
     $location.path(route);

@@ -1,8 +1,12 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
-App.controller('updateController', function($scope, $http, $location){
+App.controller('updateController', function($scope, $http, $location, $cookies){
 
   $scope.message = 'Check out the update controller!';
+
+  var all = $cookies.getAll();
+
+  // console.log(all);
 
   $scope.go = function(route){
     $location.path(route);

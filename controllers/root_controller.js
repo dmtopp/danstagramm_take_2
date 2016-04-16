@@ -23,11 +23,21 @@ App.route('/')
     res.sendFile(path.join(__dirname, '../public/views/layout.html'));
   })
 
+App.route('/logged_in')
+  .get(function(req, res, next){
+    console.log(req.session);
+    res.send(req.session.loggedIn);
+  })
+
 App.route('/login')
   .post(function(req, res, next){
     sess = req.session;
-    console.log(session);
-    res.send('log in response!');
+    sess.loggedIn = false;
+    var passwordsMatched = true;
+    // add logic to check password hash
+    if (passwordsMatched) sess.loggedIn = true;
+    // console.log(sess);
+    res.send(sess.loggedIn);
     // log the user in
   })
 
