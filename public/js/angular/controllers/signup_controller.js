@@ -1,8 +1,8 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
 
-App.controller('updateController', function($scope, $http, $location){
+App.controller('signupController', function($scope, $http, $location){
 
-  $scope.message = 'Check out the update controller!';
+  $scope.message = "check out the signup controller!"
 
   $scope.go = function(route){
     $location.path(route);
@@ -12,18 +12,16 @@ App.controller('updateController', function($scope, $http, $location){
     var data = {
       username: $scope.username,
       password: $scope.password,
-      newPassword: $scope.newPassword,
-      confirmNewPassword: $scope.confirmNewPassword
+      confirmPassword: $scope.confirmPassword
     }
 
     $scope.password = '';
-    $scope.newPassword = '';
-    $scope.confirmNewPassword = '';
+    $scope.confirmPassword = '';
 
-    if (!data.username || !data.password || !data.newPassword || !data.confirmNewPassword){
+    if (!data.username || !data.password || !data.confirmPassword){
       $scope.message = "please fill out all fields.  thxxxxx";
     }
-    else if(data.newPassword != data.confirmNewPassword){
+    else if(data.password != data.confirmPassword){
       $scope.message = "passwords do not match :(";
     } else{
 
@@ -31,7 +29,7 @@ App.controller('updateController', function($scope, $http, $location){
 
       $http({
         method: 'post',
-        url: '/update',
+        url: '/signup',
         data: data
       }).then(function(res){
         console.log(res.data);
@@ -44,4 +42,4 @@ App.controller('updateController', function($scope, $http, $location){
     }
 
   }
-})
+});

@@ -1,8 +1,9 @@
-<div ng-controller="loginController">
+<div ng-controller="signupController">
   <small>{{ message }}</small>
   <form action="/" method="post">
     <input type="text" placeholder="username" ng-model="username">
     <input type="text" placeholder="password" ng-model="password">
+    <input type="text" placeholder="confirm password" ng-model="confirmPassword">
     <button type="button" ng-click="submit()">Submit</button>
   </form>
 

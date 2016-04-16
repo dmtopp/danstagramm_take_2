@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
 
-App.config(function($routeProvider){
+App.config(function($routeProvider, $locationProvider){
   // Map our angular controllers to our different views
   $routeProvider
     .when('/?', {
@@ -18,6 +18,10 @@ App.config(function($routeProvider){
     .when('/update', {
       templateUrl : '/views/pages/update_account.html',
       controller  : 'updateController'
+    })
+    .when('/signup', {
+      templateUrl : '/views/pages/signup.html',
+      controller  : 'signupController'
     });
 })
 
@@ -2402,24 +2406,153 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
 
-App.controller('homeController', function($scope){
+App.controller('homeController', function($scope, $http){
 
   $scope.message = 'Check out the home controller!';
 
+
+  $http({
+    method: 'get',
+    url: '/photos'
+  }).then(function(res){
+    console.log(res);
+  }, function(err){
+    console.log(err);
+  })
 });
 
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
 
-App.controller('loginController', function($scope){
+App.controller('loginController', function($scope, $http, $location){
 
   $scope.message = 'Check out the login controller';
+
+  $scope.go = function(route){
+    $location.path(route);
+  }
+
+  $scope.submit = function(){
+    var data = {
+      username: $scope.username,
+      password: $scope.password,
+    }
+
+    $scope.password = '';
+
+    if (!data.username || !data.password){
+      $scope.message = "please fill out all fields.  thxxxxx";
+    } else{
+
+      $scope.username = '';
+
+      $http({
+        method: 'post',
+        url: '/login',
+        data: data
+      }).then(function(res){
+        console.log(res.data);
+        $scope.go('/');
+      }, function(err){
+        console.log(err);
+      })
+
+    }
+
+  }
 });
 
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
 
-App.controller('updateController', function($scope){
+App.controller('signupController', function($scope, $http, $location){
+
+  $scope.message = "check out the signup controller!"
+
+  $scope.go = function(route){
+    $location.path(route);
+  }
+
+  $scope.submit = function(){
+    var data = {
+      username: $scope.username,
+      password: $scope.password,
+      confirmPassword: $scope.confirmPassword
+    }
+
+    $scope.password = '';
+    $scope.confirmPassword = '';
+
+    if (!data.username || !data.password || !data.confirmPassword){
+      $scope.message = "please fill out all fields.  thxxxxx";
+    }
+    else if(data.password != data.confirmPassword){
+      $scope.message = "passwords do not match :(";
+    } else{
+
+      $scope.username = '';
+
+      $http({
+        method: 'post',
+        url: '/signup',
+        data: data
+      }).then(function(res){
+        console.log(res.data);
+        $scope.message = 'success!';
+        // $scope.go('/');
+      }, function(err){
+        console.log(err);
+      })
+
+    }
+
+  }
+});
+
+var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
+
+App.controller('updateController', function($scope, $http, $location){
 
   $scope.message = 'Check out the update controller!';
+
+  $scope.go = function(route){
+    $location.path(route);
+  }
+
+  $scope.submit = function(){
+    var data = {
+      username: $scope.username,
+      password: $scope.password,
+      newPassword: $scope.newPassword,
+      confirmNewPassword: $scope.confirmNewPassword
+    }
+
+    $scope.password = '';
+    $scope.newPassword = '';
+    $scope.confirmNewPassword = '';
+
+    if (!data.username || !data.password || !data.newPassword || !data.confirmNewPassword){
+      $scope.message = "please fill out all fields.  thxxxxx";
+    }
+    else if(data.newPassword != data.confirmNewPassword){
+      $scope.message = "passwords do not match :(";
+    } else{
+
+      $scope.username = '';
+
+      $http({
+        method: 'post',
+        url: '/update',
+        data: data
+      }).then(function(res){
+        console.log(res.data);
+        $scope.message = 'success!';
+        // $scope.go('/');
+      }, function(err){
+        console.log(err);
+      })
+
+    }
+
+  }
 })
 
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
@@ -2445,21 +2578,27 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', function($scope
   $scope.upload = function (file) {
     // dataUrl converts the image to base64 first
     Upload.dataUrl(file, true)
-      .then(function(base64){      
+      .then(function(base64){
         $http({
           method: 'post',
           url: '/upload',
-          data: {file: base64}
+          data: { file: base64,
+                  uploader: "me",
+                  uploader_id: "1",
+                  caption: "The best photo like ever",
+                  likes: 10,
+                  comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
+                }
         }).then(function(res){
           console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
-        }), function(err){
+        }, function(err){
           console.log('oh no!');
           console.log(err);
-        }
+        })
 
       })
 
-  };
+    };
 
 
 }]);

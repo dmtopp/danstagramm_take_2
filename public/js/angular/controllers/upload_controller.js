@@ -21,21 +21,27 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', function($scope
   $scope.upload = function (file) {
     // dataUrl converts the image to base64 first
     Upload.dataUrl(file, true)
-      .then(function(base64){      
+      .then(function(base64){
         $http({
           method: 'post',
           url: '/upload',
-          data: {file: base64}
+          data: { file: base64,
+                  uploader: "me",
+                  uploader_id: "1",
+                  caption: "The best photo like ever",
+                  likes: 10,
+                  comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
+                }
         }).then(function(res){
           console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
-        }), function(err){
+        }, function(err){
           console.log('oh no!');
           console.log(err);
-        }
+        })
 
       })
 
-  };
+    };
 
 
 }]);

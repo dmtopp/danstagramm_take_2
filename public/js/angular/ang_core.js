@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload']);
 
-App.config(function($routeProvider){
+App.config(function($routeProvider, $locationProvider){
   // Map our angular controllers to our different views
   $routeProvider
     .when('/?', {
@@ -18,5 +18,9 @@ App.config(function($routeProvider){
     .when('/update', {
       templateUrl : '/views/pages/update_account.html',
       controller  : 'updateController'
+    })
+    .when('/signup', {
+      templateUrl : '/views/pages/signup.html',
+      controller  : 'signupController'
     });
 })
