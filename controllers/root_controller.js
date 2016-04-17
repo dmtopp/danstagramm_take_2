@@ -2,7 +2,9 @@
 var express    = require('express'),
     session    = require('express-session'),
     App        = express.Router(),
-    path       = require('path');
+    path       = require('path'),
+    bcrypt     = require('bcrypt-nodejs'),
+    mongoose   = require('mongoose');
 
 // set up sessions
 // App.use(express.cookieParser());
@@ -13,6 +15,7 @@ var sess;
 
 // grab our models for the db
 var Photo = require('../models/Photo');
+var User  = require('../models/User');
 
 
 // set up routes!
@@ -34,18 +37,66 @@ App.route('/login')
     sess = req.session;
     sess.loggedIn = false;
     var passwordsMatched = true;
-    // add logic to check password hash
-    if (passwordsMatched) sess.loggedIn = true;
-    // console.log(sess);
-    res.send(sess.loggedIn);
-    // log the user in
-  })
+
+    User.findOne({ username: req.body.username }, 'password', function(err, person){
+      if (err) console.log(err);
+      else {
+        // compare password with the one in the database
+        bcrypt.compare(req.body.password, person.password, function(err, matched){
+          console.log('request pwd: ' + req.body.password);
+          console.log('db pwd: ' + person.password);
+          // log the user in if they matched
+          sess.loggedIn = matched;
+          // tell the client the user is now logged in
+          res.send(sess.loggedIn);
+        })
+
+      } // else
+
+    }) // find
+
+  }) // post
 
 App.route('/signup')
   .post(function(req, res, next){
-    console.log(req.body);
-    res.send('sign up response!');
-    // save a new login in the database and log the user in
+
+    // object to hold our request data
+    var userData = {
+      username:        req.body.username,
+      password:        req.body.password,
+      confirmPassword: req.body.confirmPassword,
+      alreadyExist:    false };
+
+    // look in the database to see if there's already a user with that username
+    User.findOne({ username: req.body.username }, 'username', function(err, person){
+      if (err) console.log(err);
+      else {
+        // if no results, this will be set to null
+        userData.alreadyExist = person;
+        // create a new user
+        createUser(userData);
+      }
+    })
+
+    // creates a new user in the database from a userData object
+    function createUser(user){
+      if (user.password === user.confirmPassword && !user.alreadyExist){
+        bcrypt.hash(req.body, null, null, function(err, hash){
+          User.create({ username: req.body.username, password: hash }, function(err, user){
+            if (err) console.log(err);
+            else console.log("success!" + user);
+          })
+
+        })
+        res.send('Success! Thanks for signing up!');
+      }else if (user.alreadyExist){
+        res.send('It looks like that user already exists! Please try a different username.');
+      } else{
+        res.send('Your passwords didn\'t match! Please try again.');
+      }
+
+    };
+
   })
 
 App.route('/update')

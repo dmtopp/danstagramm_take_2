@@ -2751,7 +2751,7 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
   $scope.message = 'Check out the home controller!';
 
-  var all = $cookies.getAll();
+  // var all = $cookies.getAll();
 
   // console.log(all);
 
@@ -2761,6 +2761,7 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
     $location.path(route);
   }
 
+  // ask the server if the user is logged in
   $http({
     method: 'get',
     url: '/logged_in'
@@ -2768,6 +2769,7 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
     console.log(res.data);
     logged_in = res.data; //true or false
 
+    // if not, go to login view
     if (!logged_in) {
       $scope.go('/login');
     } else{
@@ -2887,7 +2889,7 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
         data: data
       }).then(function(res){
         console.log(res.data);
-        $scope.message = 'success!';
+        $scope.message = res.data;
         // $scope.go('/');
       }, function(err){
         console.log(err);

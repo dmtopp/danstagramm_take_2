@@ -37,7 +37,7 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
         data: data
       }).then(function(res){
         console.log(res.data);
-        $scope.message = 'success!';
+        $scope.message = res.data;
         // $scope.go('/');
       }, function(err){
         console.log(err);
