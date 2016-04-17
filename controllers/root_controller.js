@@ -3,7 +3,7 @@ var express    = require('express'),
     session    = require('express-session'),
     App        = express.Router(),
     path       = require('path'),
-    bcrypt     = require('bcrypt-nodejs'),
+    bcrypt     = require('bcryptjs'),
     mongoose   = require('mongoose');
 
 // set up sessions
@@ -47,7 +47,7 @@ App.route('/login')
           console.log('db pwd: ' + person.password);
           // log the user in if they matched
           sess.loggedIn = matched;
-          // tell the client the user is now logged in
+          // tell the client if the user successfully logged in
           res.send(sess.loggedIn);
         })
 
@@ -81,13 +81,16 @@ App.route('/signup')
     // creates a new user in the database from a userData object
     function createUser(user){
       if (user.password === user.confirmPassword && !user.alreadyExist){
-        bcrypt.hash(req.body, null, null, function(err, hash){
-          User.create({ username: req.body.username, password: hash }, function(err, user){
-            if (err) console.log(err);
-            else console.log("success!" + user);
-          })
+        bcrypt.genSalt(10, function(err,salt){
+          bcrypt.hash(user.password, salt, function(err, hash){
+            User.create({ username: user.username, password: hash }, function(err, user){
+              if (err) console.log(err);
+              else console.log("success!" + user);
+            })
 
+          })
         })
+
         res.send('Success! Thanks for signing up!');
       }else if (user.alreadyExist){
         res.send('It looks like that user already exists! Please try a different username.');
