@@ -2778,14 +2778,15 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
       // http request to get feed
 
 
-      // $http({
-      //   method: 'get',
-      //   url: '/photos'
-      // }).then(function(res){
-      //   console.log(res);
-      // }, function(err){
-      //   console.log(err);
-      // })
+      $http({
+        method: 'get',
+        url: '/photos'
+      }).then(function(res){
+        $scope.photos = res.data;
+        console.log(res);
+      }, function(err){
+        console.log(err);
+      })
 
     }
 

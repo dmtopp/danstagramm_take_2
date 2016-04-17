@@ -125,10 +125,10 @@ App.route('/photos')
     Photo.find(function(err, photos){
       if (err) console.log(err);
       else {
-        var idees = photos.map(function(photo){
-          return photo._id;
+        var photoData = photos.map(function(photo){
+          return photo.file;
         })
-        res.send(idees);
+        res.send(photoData);
       }
     })
     // send back a particular photo or all photos in the user's feed
