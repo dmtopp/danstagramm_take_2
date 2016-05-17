@@ -2751,9 +2751,9 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
   $scope.message = 'Check out the home controller!';
 
-  // var all = $cookies.getAll();
+  var all = $cookies.getAll();
 
-  // console.log(all);
+  console.log(all);
 
   var logged_in = false;
 
@@ -2766,24 +2766,21 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
     method: 'get',
     url: '/logged_in'
   }).then(function(res){
-    console.log(res.data);
-    logged_in = res.data; //true or false
+    $cookies.put('loggedIn', res.data); //res.data will return true or false
 
     // if not, go to login view
-    if (!logged_in) {
+    if ($cookies.get('loggedIn')) {
       $scope.go('/login');
     } else{
 
-      console.log('this would be displaying so many awesome photos');
+      // console.log('this would be displaying so many awesome photos');
       // http request to get feed
-
-
       $http({
         method: 'get',
         url: '/photos'
       }).then(function(res){
         $scope.photos = res.data;
-        console.log(res);
+        // console.log(res);
       }, function(err){
         console.log(err);
       })
@@ -2807,8 +2804,11 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
   $scope.message = 'Check out the login controller';
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   $scope.go = function(route){
     $location.path(route);
@@ -2858,8 +2858,11 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
   $scope.message = "check out the signup controller!"
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   $scope.go = function(route){
     $location.path(route);
@@ -2908,8 +2911,11 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
   $scope.message = 'Check out the update controller!';
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   $scope.go = function(route){
     $location.path(route);
@@ -2960,8 +2966,11 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
   $scope.message = 'Check out the upload controller!';
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   // submit function triggers on button click
   $scope.submit = function() {

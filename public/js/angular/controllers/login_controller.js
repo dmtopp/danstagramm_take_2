@@ -5,8 +5,11 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
   $scope.message = 'Check out the login controller';
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   $scope.go = function(route){
     $location.path(route);
@@ -28,7 +31,7 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
 
       $http({
         method: 'post',
-        url: '/login',
+        url: '/users/login',
         data: data
       }).then(function(res){
         console.log(res.data);

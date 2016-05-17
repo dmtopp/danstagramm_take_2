@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 .env
-=======
+
 # Logs
 logs
 *.log
@@ -34,4 +33,3 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
->>>>>>> 126bd505ba8dd676d3f559625ffa08b3c9306d2b

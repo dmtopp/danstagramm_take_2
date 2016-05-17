@@ -5,8 +5,11 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
   $scope.message = "check out the signup controller!"
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   $scope.go = function(route){
     $location.path(route);
@@ -33,7 +36,7 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
 
       $http({
         method: 'post',
-        url: '/signup',
+        url: '/users/signup',
         data: data
       }).then(function(res){
         console.log(res.data);

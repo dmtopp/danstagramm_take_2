@@ -5,8 +5,11 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
   $scope.message = 'Check out the update controller!';
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   $scope.go = function(route){
     $location.path(route);
@@ -35,7 +38,7 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
 
       $http({
         method: 'post',
-        url: '/update',
+        url: '/users/update',
         data: data
       }).then(function(res){
         console.log(res.data);

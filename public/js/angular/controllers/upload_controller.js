@@ -5,8 +5,11 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
   $scope.message = 'Check out the upload controller!';
 
   var all = $cookies.getAll();
+  console.log(all);
 
-  // console.log(all);
+  if (!$cookies.get('loggedIn')) {
+    $location.path('/login');
+  }
 
   // submit function triggers on button click
   $scope.submit = function() {

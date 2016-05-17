@@ -4,9 +4,9 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
   $scope.message = 'Check out the home controller!';
 
-  // var all = $cookies.getAll();
+  var all = $cookies.getAll();
 
-  // console.log(all);
+  console.log(all);
 
   var logged_in = false;
 
@@ -17,26 +17,23 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
   // ask the server if the user is logged in
   $http({
     method: 'get',
-    url: '/logged_in'
+    url: '/users/logged_in'
   }).then(function(res){
-    console.log(res.data);
-    logged_in = res.data; //true or false
+    $cookies.put('loggedIn', res.data); //res.data will return true or false
 
     // if not, go to login view
-    if (!logged_in) {
+    if ($cookies.get('loggedIn')) {
       $scope.go('/login');
     } else{
 
-      console.log('this would be displaying so many awesome photos');
+      // console.log('this would be displaying so many awesome photos');
       // http request to get feed
-
-
       $http({
         method: 'get',
         url: '/photos'
       }).then(function(res){
         $scope.photos = res.data;
-        console.log(res);
+        // console.log(res);
       }, function(err){
         console.log(err);
       })
