@@ -4,18 +4,13 @@ var express    = require('express'),
     App        = express.Router(),
     bcrypt     = require('bcryptjs'),
     mongoose   = require('mongoose'),
-    jwt        = require('jsonwebtoken');
+    jwt        = require('jsonwebtoken'),
+    User       = require('../models/User');
 
-App.route('/logged_in')
-  .get(function(req, res, next){
-    console.log(req.session);
-    res.send(req.session.loggedIn);
-  })
+
 
 App.route('/login')
   .post(function(req, res, next){
-    sess = req.session;
-    sess.loggedIn = false;
     var passwordsMatched = true;
 
     User.findOne({ username: req.body.username }, 'password', function(err, person){
@@ -23,12 +18,17 @@ App.route('/login')
       else {
         // compare password with the one in the database
         bcrypt.compare(req.body.password, person.password, function(err, matched){
+          var response = {};
           console.log('request pwd: ' + req.body.password);
           console.log('db pwd: ' + person.password);
-          // log the user in if they matched
-          sess.loggedIn = matched;
+          if (matched) {
+            response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 60*60 });
+            response.message = "Success!";
+          } else {
+            response.message = "Wrong Password!  Please try again.";
+          }
           // tell the client if the user successfully logged in
-          res.send(sess.loggedIn);
+          res.json(response);
         })
 
       } // else

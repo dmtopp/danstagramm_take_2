@@ -2761,37 +2761,19 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
     $location.path(route);
   }
 
-  // ask the server if the user is logged in
-  $http({
-    method: 'get',
-    url: '/logged_in'
-  }).then(function(res){
-    $cookies.put('loggedIn', res.data); //res.data will return true or false
+  
+  // console.log('this would be displaying so many awesome photos');
+  // http request to get feed
+  // $http({
+  //   method: 'get',
+  //   url: '/photos'
+  // }).then(function(res){
+  //   $scope.photos = res.data;
+  //   // console.log(res);
+  // }, function(err){
+  //   console.log(err);
+  // })
 
-    // if not, go to login view
-    if ($cookies.get('loggedIn')) {
-      $scope.go('/login');
-    } else{
-
-      // console.log('this would be displaying so many awesome photos');
-      // http request to get feed
-      $http({
-        method: 'get',
-        url: '/photos'
-      }).then(function(res){
-        $scope.photos = res.data;
-        // console.log(res);
-      }, function(err){
-        console.log(err);
-      })
-
-    }
-
-
-
-  }, function(err){
-    console.log(err);
-  })
 
 
 
@@ -2830,7 +2812,7 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
 
       $http({
         method: 'post',
-        url: '/login',
+        url: '/users/login',
         data: data
       }).then(function(res){
         console.log(res.data);
@@ -2889,7 +2871,7 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
 
       $http({
         method: 'post',
-        url: '/signup',
+        url: '/users/signup',
         data: data
       }).then(function(res){
         console.log(res.data);
@@ -2944,7 +2926,7 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
 
       $http({
         method: 'post',
-        url: '/update',
+        url: '/users/update',
         data: data
       }).then(function(res){
         console.log(res.data);

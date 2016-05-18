@@ -5,12 +5,11 @@ var express    = require('express'),
     path       = require('path'),
     bcrypt     = require('bcryptjs'),
     mongoose   = require('mongoose'),
-    jwt        = require('jsonwebtoken');
+    jwt        = require('jsonwebtoken'),
+    User       = require('../models/User'),
+    Photo      = require('../models/Photo');
 
 
-// grab our models for the db
-var Photo = require('../models/Photo');
-var User  = require('../models/User');
 
 
 /* Set up routes!
