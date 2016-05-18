@@ -2,7 +2,7 @@ var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies'])
 
 App.controller('loginController', function($scope, $http, $location, $cookies){
 
-  $scope.message = 'Check out the login controller';
+  $scope.message = 'Pls login to use all the sweet Danstagramm features';
 
   var all = $cookies.getAll();
   console.log(all);

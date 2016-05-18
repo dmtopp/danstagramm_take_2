@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
-App.factory("loginManager", ['$cookies', 
+App.factory("loginManager", ['$cookies',
   function($cookies){
     var username = '';
 
@@ -43,5 +43,9 @@ App.config(function($routeProvider, $locationProvider){
     .when('/signup', {
       templateUrl : '/views/pages/signup.html',
       controller  : 'signupController'
+    })
+    .when('/logout', {
+      templateUrl : '/views/pages/home.html',
+      controller  : 'logoutController'
     });
 })

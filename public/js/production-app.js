@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
-App.factory("loginManager", ['$cookies', 
+App.factory("loginManager", ['$cookies',
   function($cookies){
     var username = '';
 
@@ -43,6 +43,10 @@ App.config(function($routeProvider, $locationProvider){
     .when('/signup', {
       templateUrl : '/views/pages/signup.html',
       controller  : 'signupController'
+    })
+    .when('/logout', {
+      templateUrl : '/views/pages/home.html',
+      controller  : 'logoutController'
     });
 })
 
@@ -2785,7 +2789,7 @@ var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies'])
 
 App.controller('loginController', function($scope, $http, $location, $cookies){
 
-  $scope.message = 'Check out the login controller';
+  $scope.message = 'Pls login to use all the sweet Danstagramm features';
 
   var all = $cookies.getAll();
   console.log(all);
@@ -2834,6 +2838,21 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
 
   }
 });
+
+var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+
+App.controller('logoutController', function($scope, $http, $location, $cookies) {
+
+  $scope.go = function(route){
+    console.log('go!');
+    $location.path(route);
+  }
+
+  $cookies.remove('token');
+  $scope.go('/');
+
+  $scope.message = "You are now logged out.  See ya around!";
+})
 
 var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
 
