@@ -1,7 +1,7 @@
 // require dependencies
 // --------------------
 var express    = require('express'),
-    App        = express.Router(),
+    UserController        = express.Router(),
     bcrypt     = require('bcryptjs'),
     mongoose   = require('mongoose'),
     jwt        = require('jsonwebtoken'),
@@ -9,7 +9,7 @@ var express    = require('express'),
 
 
 
-App.route('/login')
+UserController.route('/login')
   .post(function(req, res, next){
     var passwordsMatched = true;
 
@@ -40,7 +40,7 @@ App.route('/login')
 
   }) // post
 
-App.route('/signup')
+UserController.route('/signup')
   .post(function(req, res, next){
 
     // object to hold our request data
@@ -85,11 +85,11 @@ App.route('/signup')
 
   })
 
-App.route('/update')
+UserController.route('/update')
   .post(function(req, res, next){
     console.log(req.body);
     res.send('update response!');
   })
 
 
-module.exports = App;
+module.exports = UserController;

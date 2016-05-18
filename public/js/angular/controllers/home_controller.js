@@ -4,6 +4,8 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
   $scope.message = 'Check out the home controller!';
 
+  $http.defaults.headers.common.Authorization = $cookies.get('token');
+
   var all = $cookies.getAll();
 
   console.log(all);
@@ -14,18 +16,18 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
     $location.path(route);
   }
 
-  
+
   // console.log('this would be displaying so many awesome photos');
   // http request to get feed
-  // $http({
-  //   method: 'get',
-  //   url: '/photos'
-  // }).then(function(res){
-  //   $scope.photos = res.data;
-  //   // console.log(res);
-  // }, function(err){
-  //   console.log(err);
-  // })
+  $http({
+    method: 'get',
+    url: '/photos/all'
+  }).then(function(res){
+    $scope.photos = res.data;
+    // console.log(res);
+  }, function(err){
+    console.log(err);
+  })
 
 
 

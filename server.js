@@ -37,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', require('./controllers/root_controller'));
 app.use('/users', require('./controllers/users_controller'));
+app.use('/photos', require('./controllers/photos_controller'));
 
 
 // start the server
