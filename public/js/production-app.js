@@ -2976,7 +2976,7 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
       .then(function(base64){
         $http({
           method: 'post',
-          url: '/upload',
+          url: '/photos/upload',
           data: { file: base64,
                   uploader: "me",
                   uploader_id: "1",

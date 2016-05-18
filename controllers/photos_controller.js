@@ -1,22 +1,16 @@
 // require dependencies
 // --------------------
-var express    = require('express'),
-    PhotoController        = express.Router(),
-    path       = require('path'),
-    bcrypt     = require('bcryptjs'),
-    mongoose   = require('mongoose'),
-    jwt        = require('jsonwebtoken'),
-    User       = require('../models/User'),
-    Photo      = require('../models/Photo');
+var express         = require('express'),
+    PhotoController = express.Router(),
+    path            = require('path'),
+    bcrypt          = require('bcryptjs'),
+    mongoose        = require('mongoose'),
+    jwt             = require('jsonwebtoken'),
+    User            = require('../models/User'),
+    Photo           = require('../models/Photo');
 
 PhotoController.use(function(req, res, next) {
-  // console.log(req.body.token);
-  // console.log(req.headers['x-access-token']);
-  // console.log(req.query.token);
-  console.log(req.headers.authorization);
   var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers.authorization;
-
-  console.log("token? : " + token);
 
   if (token) {
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
@@ -32,9 +26,9 @@ PhotoController.use(function(req, res, next) {
   }
 })
 
-
+PhotoController.route('/upload')
   .post(function(req, res, next){
-    console.log('The /upload route has recieved a post request!');
+    // console.log('The /upload route has recieved a post request!');
     // save req.body.file in the database
     Photo.create(req.body, function(err, Photo){
       if (err) console.log(err);
