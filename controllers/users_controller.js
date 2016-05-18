@@ -24,8 +24,11 @@ App.route('/login')
           if (matched) {
             response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 60*60 });
             response.message = "Success!";
+            response.success = true;
+
           } else {
             response.message = "Wrong Password!  Please try again.";
+            response.success = false;
           }
           // tell the client if the user successfully logged in
           res.json(response);

@@ -35,8 +35,8 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
         data: data
       }).then(function(res){
         console.log(res.data);
-        if (res.data){
-          $cookies.put('loggedIn', true);
+        if (res.data.success){
+          $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
           $scope.go('/');
         } else{
