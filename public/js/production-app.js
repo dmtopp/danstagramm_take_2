@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.factory("loginManager", ['$cookies',
   function($cookies){
@@ -21,30 +21,44 @@ App.factory("loginManager", ['$cookies',
 
 }])
 
-App.config(function($routeProvider, $locationProvider){
+App.config(function($stateProvider, $urlRouterProvider){
   // Map our angular controllers to our different views
-  $routeProvider
-    .when('/?', {
+
+  $urlRouterProvider.otherwise('/');
+
+  $stateProvider
+    .state('parent', {
+      url: '/',
+      templateUrl : '/views/pages/parent.html',
+      controller  : 'parentController'
+    })
+    .state('parent.home', {
+      url: '/home',
       templateUrl : '/views/pages/home.html',
       controller  : 'homeController'
     })
-    .when('/login', {
+    .state('parent.login', {
+      url: '/login',
       templateUrl : '/views/pages/login.html',
       controller  : 'loginController'
     })
-    .when('/upload', {
+    .state('parent.upload', {
+      url: '/upload',
       templateUrl : '/views/pages/upload.html',
       controller  : 'uploadController'
     })
-    .when('/update', {
+    .state('parent.update', {
+      url: '/update',
       templateUrl : '/views/pages/update_account.html',
       controller  : 'updateController'
     })
-    .when('/signup', {
+    .state('parent.signup', {
+      url: '/signup',
       templateUrl : '/views/pages/signup.html',
       controller  : 'signupController'
     })
-    .when('/logout', {
+    .state('parent.logout', {
+      url: '/logout',
       templateUrl : '/views/pages/home.html',
       controller  : 'logoutController'
     });
@@ -2749,9 +2763,9 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
   return upload;
 }]);
 
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('homeController', function($scope, $http, $location, $cookies){
+App.controller('homeController', function($scope, $http, $state, $cookies){
 
   $scope.message = 'Check out the home controller!';
 
@@ -2759,13 +2773,11 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
   var all = $cookies.getAll();
 
-  console.log(all);
+  // console.log(all);
+
+  console.log($cookies.get('loggedIn'));
 
   var logged_in = false;
-
-  $scope.go = function(route){
-    $location.path(route);
-  }
 
 
   // console.log('this would be displaying so many awesome photos');
@@ -2785,22 +2797,14 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
 });
 
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('loginController', function($scope, $http, $location, $cookies){
+App.controller('loginController', function($scope, $http, $state, $cookies){
 
   $scope.message = 'Pls login to use all the sweet Danstagramm features';
 
   var all = $cookies.getAll();
-  console.log(all);
-
-  if (!$cookies.get('loggedIn')) {
-    $location.path('/login');
-  }
-
-  $scope.go = function(route){
-    $location.path(route);
-  }
+  // console.log(all);
 
   $scope.submit = function(){
     var data = {
@@ -2821,10 +2825,11 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
         url: '/users/login',
         data: data
       }).then(function(res){
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.success){
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
+          $cookies.put('loggedIn', true);
           $scope.go('/');
         } else{
           $scope.message = "incorrect password plz try agin";
@@ -2839,37 +2844,38 @@ App.controller('loginController', function($scope, $http, $location, $cookies){
   }
 });
 
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('logoutController', function($scope, $http, $location, $cookies) {
+App.controller('logoutController', function($scope, $http, $state, $cookies) {
 
-  $scope.go = function(route){
-    console.log('go!');
-    $location.path(route);
-  }
 
   $cookies.remove('token');
-  $scope.go('/');
+  $cookies.remove('loggedIn');
+  $cookies.remove('username');
+
+  console.log($cookies.getAll());
+
+  $state.go('parent.login');
 
   $scope.message = "You are now logged out.  See ya around!";
 })
 
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('signupController', function($scope, $http, $location, $cookies){
+App.controller('parentController', function($scope) {
+  
+})
+
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+
+App.controller('signupController', function($scope, $http, $state, $cookies){
 
   $scope.message = "check out the signup controller!"
 
   var all = $cookies.getAll();
-  console.log(all);
+  // console.log(all);
 
-  if (!$cookies.get('loggedIn')) {
-    $location.path('/login');
-  }
-
-  $scope.go = function(route){
-    $location.path(route);
-  }
+  console.log($cookies.get('loggedIn'));
 
   $scope.submit = function(){
     var data = {
@@ -2907,21 +2913,19 @@ App.controller('signupController', function($scope, $http, $location, $cookies){
   }
 });
 
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('updateController', function($scope, $http, $location, $cookies){
+App.controller('updateController', function($scope, $http, $state, $cookies){
 
   $scope.message = 'Check out the update controller!';
 
   var all = $cookies.getAll();
-  console.log(all);
+  // console.log(all);
+
+  console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $location.path('/login');
-  }
-
-  $scope.go = function(route){
-    $location.path(route);
+    $state.go('parent.login');
   }
 
   $scope.submit = function(){
@@ -2950,7 +2954,7 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
         url: '/users/update',
         data: data
       }).then(function(res){
-        console.log(res.data);
+        // console.log(res.data);
         $scope.message = 'success!';
         // $scope.go('/');
       }, function(err){
@@ -2962,17 +2966,19 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
   }
 })
 
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', function($scope, Upload, $http, $cookies){
+App.controller('uploadController', function($scope, Upload, $state, $http, $cookies){
 
   $scope.message = 'Check out the upload controller!';
 
-  var all = $cookies.getAll();
-  console.log(all);
+  // var all = $cookies.getAll();
+  // console.log(all);
+
+  console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $location.path('/login');
+    $state.go('parent.login');
   }
 
   // submit function triggers on button click
@@ -3004,7 +3010,7 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
                   comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
                 }
         }).then(function(res){
-          console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
+          // console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
         }, function(err){
           console.log('oh no!');
           console.log(err);
@@ -3015,4 +3021,4 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
     };
 
 
-}]);
+});

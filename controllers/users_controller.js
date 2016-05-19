@@ -19,8 +19,8 @@ UserController.route('/login')
         // compare password with the one in the database
         bcrypt.compare(req.body.password, person.password, function(err, matched){
           var response = {};
-          console.log('request pwd: ' + req.body.password);
-          console.log('db pwd: ' + person.password);
+          // console.log('request pwd: ' + req.body.password);
+          // console.log('db pwd: ' + person.password);
           if (matched) {
             response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 60*60 });
             response.message = "Success!";
@@ -68,7 +68,7 @@ UserController.route('/signup')
           bcrypt.hash(user.password, salt, function(err, hash){
             User.create({ username: user.username, password: hash }, function(err, user){
               if (err) console.log(err);
-              else console.log("success!" + user);
+              else console.log("success! " + user);
             })
 
           })

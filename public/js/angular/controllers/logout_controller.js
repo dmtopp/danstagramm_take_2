@@ -1,14 +1,15 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('logoutController', function($scope, $http, $location, $cookies) {
+App.controller('logoutController', function($scope, $http, $state, $cookies) {
 
-  $scope.go = function(route){
-    console.log('go!');
-    $location.path(route);
-  }
 
   $cookies.remove('token');
-  $scope.go('/');
+  $cookies.remove('loggedIn');
+  $cookies.remove('username');
+
+  console.log($cookies.getAll());
+
+  $state.go('parent.login');
 
   $scope.message = "You are now logged out.  See ya around!";
 })

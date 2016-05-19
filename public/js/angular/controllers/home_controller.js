@@ -1,6 +1,6 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('homeController', function($scope, $http, $location, $cookies){
+App.controller('homeController', function($scope, $http, $state, $cookies){
 
   $scope.message = 'Check out the home controller!';
 
@@ -8,13 +8,11 @@ App.controller('homeController', function($scope, $http, $location, $cookies){
 
   var all = $cookies.getAll();
 
-  console.log(all);
+  // console.log(all);
+
+  console.log($cookies.get('loggedIn'));
 
   var logged_in = false;
-
-  $scope.go = function(route){
-    $location.path(route);
-  }
 
 
   // console.log('this would be displaying so many awesome photos');

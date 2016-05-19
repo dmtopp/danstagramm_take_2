@@ -1,14 +1,16 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', function($scope, Upload, $http, $cookies){
+App.controller('uploadController', function($scope, Upload, $state, $http, $cookies){
 
   $scope.message = 'Check out the upload controller!';
 
-  var all = $cookies.getAll();
-  console.log(all);
+  // var all = $cookies.getAll();
+  // console.log(all);
+
+  console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $location.path('/login');
+    $state.go('parent.login');
   }
 
   // submit function triggers on button click
@@ -40,7 +42,7 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
                   comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
                 }
         }).then(function(res){
-          console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
+          // console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
         }, function(err){
           console.log('oh no!');
           console.log(err);
@@ -51,4 +53,4 @@ App.controller('uploadController', ['$scope', 'Upload', '$http', '$cookies', fun
     };
 
 
-}]);
+});

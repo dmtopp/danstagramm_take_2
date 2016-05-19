@@ -1,18 +1,16 @@
-var App = App || angular.module('App', ['ngRoute', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('updateController', function($scope, $http, $location, $cookies){
+App.controller('updateController', function($scope, $http, $state, $cookies){
 
   $scope.message = 'Check out the update controller!';
 
   var all = $cookies.getAll();
-  console.log(all);
+  // console.log(all);
+
+  console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $location.path('/login');
-  }
-
-  $scope.go = function(route){
-    $location.path(route);
+    $state.go('parent.login');
   }
 
   $scope.submit = function(){
@@ -41,7 +39,7 @@ App.controller('updateController', function($scope, $http, $location, $cookies){
         url: '/users/update',
         data: data
       }).then(function(res){
-        console.log(res.data);
+        // console.log(res.data);
         $scope.message = 'success!';
         // $scope.go('/');
       }, function(err){
