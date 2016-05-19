@@ -10,7 +10,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
   console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $state.go('parent.login');
+    $state.go('parent.login-signup');
   }
 
   $scope.submit = function(){

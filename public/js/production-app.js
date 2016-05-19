@@ -2762,18 +2762,15 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 
 App.controller('homeController', function($scope, $http, $state, $cookies){
 
+  console.log($scope.$parent);
+
   $scope.message = 'Check out the home controller!';
 
   $http.defaults.headers.common.Authorization = $cookies.get('token');
 
-  var all = $cookies.getAll();
-
-  // console.log(all);
-
-  console.log($cookies.get('loggedIn'));
-
-  var logged_in = false;
-
+  if (!$cookies.get('loggedIn')) {
+    $state.go('parent.login-signup');
+  }
 
   // console.log('this would be displaying so many awesome photos');
   // http request to get feed
@@ -2781,8 +2778,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
     method: 'get',
     url: '/photos/all'
   }).then(function(res){
-    $scope.photos = res.data;
-    // console.log(res);
+    $scope.photos = res.data.photos;
   }, function(err){
     console.log(err);
   })
@@ -2796,12 +2792,12 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 
 App.controller('loginSignupController', function($scope, $http, $state, $cookies){
 
-  $scope.message = 'check out the new/improved login/signupt controller brah';
+  $scope.message = 'Please log in or sign up to use Danstagramm!';
 
   $scope.loginSubmit = function(){
     var data = {
-      username: $scope.username,
-      password: $scope.password,
+      username: $scope.loginUsername,
+      password: $scope.loginPassword,
     }
 
     $scope.password = '';
@@ -2822,7 +2818,8 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
           $cookies.put('loggedIn', true);
-          $scope.go('/');
+          $scope.changeLogin();
+          $state.go('parent.home');
         } else{
           $scope.message = "incorrect password plz try agin";
         }
@@ -2838,8 +2835,8 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
 
   $scope.signupSubmit = function(){
     var data = {
-      username: $scope.username,
-      password: $scope.password,
+      username: $scope.signupUsername,
+      password: $scope.signupPassword,
       confirmPassword: $scope.confirmPassword
     }
 
@@ -2862,7 +2859,6 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
       }).then(function(res){
         console.log(res.data);
         $scope.message = res.data;
-        // $scope.go('/');
       }, function(err){
         console.log(err);
       })
@@ -2882,17 +2878,27 @@ App.controller('logoutController', function($scope, $http, $state, $cookies) {
   $cookies.remove('loggedIn');
   $cookies.remove('username');
 
-  console.log($cookies.getAll());
+  $scope.changeLogin();
 
-  $state.go('parent.login');
+  $state.go('parent.login-signup');
 
   $scope.message = "You are now logged out.  See ya around!";
 })
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('parentController', function($scope) {
-  
+App.controller('parentController', function($scope, $state) {
+  $state.go('parent.home');
+
+  $scope.lol = false;
+  $scope.lolol = true;
+  $scope.loggedIn = false;
+
+  $scope.changeLogin = function() {
+    $scope.loggedIn = !$scope.loggedIn;
+  }
+
+
 })
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
@@ -2907,7 +2913,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
   console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $state.go('parent.login');
+    $state.go('parent.login-signup');
   }
 
   $scope.submit = function(){
@@ -2960,7 +2966,7 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
   console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $state.go('parent.login');
+    $state.go('parent.login-signup');
   }
 
   // submit function triggers on button click

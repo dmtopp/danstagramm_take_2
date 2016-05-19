@@ -2,12 +2,12 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 
 App.controller('loginSignupController', function($scope, $http, $state, $cookies){
 
-  $scope.message = 'check out the new/improved login/signupt controller brah';
+  $scope.message = 'Please log in or sign up to use Danstagramm!';
 
   $scope.loginSubmit = function(){
     var data = {
-      username: $scope.username,
-      password: $scope.password,
+      username: $scope.loginUsername,
+      password: $scope.loginPassword,
     }
 
     $scope.password = '';
@@ -28,7 +28,8 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
           $cookies.put('loggedIn', true);
-          $scope.go('/');
+          $scope.changeLogin();
+          $state.go('parent.home');
         } else{
           $scope.message = "incorrect password plz try agin";
         }
@@ -44,8 +45,8 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
 
   $scope.signupSubmit = function(){
     var data = {
-      username: $scope.username,
-      password: $scope.password,
+      username: $scope.signupUsername,
+      password: $scope.signupPassword,
       confirmPassword: $scope.confirmPassword
     }
 
@@ -68,7 +69,6 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
       }).then(function(res){
         console.log(res.data);
         $scope.message = res.data;
-        // $scope.go('/');
       }, function(err){
         console.log(err);
       })

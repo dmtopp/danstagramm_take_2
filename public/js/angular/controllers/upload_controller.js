@@ -10,7 +10,7 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
   console.log($cookies.get('loggedIn'));
 
   if (!$cookies.get('loggedIn')) {
-    $state.go('parent.login');
+    $state.go('parent.login-signup');
   }
 
   // submit function triggers on button click

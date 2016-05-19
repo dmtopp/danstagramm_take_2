@@ -3,13 +3,16 @@
   <nav class="twelve columns">
 
     <h1>DANSTAGRAMM</h1>
-    <a ui-sref="parent.home"><button type="button">home</button></a>
-    <a ui-sref="parent.login-signup"><button type="button">login</button></a>
-    <a ui-sref="parent.upload"><button type="button">upload</button></a>
-    <a ui-sref="parent.update"><button type="button">update info</button></a>
-    <a ui-sref="parent.logout"><button type="button">log out</button></a>
+    <a ng-show="loggedIn" ui-sref="parent.home"><button type="button">home</button></a>
+    <a ng-show="loggedIn" ui-sref="parent.upload"><button type="button">upload</button></a>
+    <a ng-hide="loggedIn" ui-sref="parent.login-signup"><button type="button">login</button></a>
+    <a ng-show="loggedIn" ui-sref="parent.update"><button type="button">update info</button></a>
+    <a ng-show="loggedIn" ui-sref="parent.logout"><button type="button">log out</button></a>
 
+    <p>{{ loggedIn }}</p>
+
+    </p>
   </nav>
 </div>
 
-<div class="row" ui-view></div>
+<div ui-view></div>

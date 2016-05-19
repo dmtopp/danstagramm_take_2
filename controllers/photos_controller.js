@@ -22,7 +22,7 @@ PhotoController.use(function(req, res, next) {
       }
     })
   } else {
-    return res.status(403).send('No token!');
+    return res.send('No token!');
   }
 })
 
@@ -46,7 +46,8 @@ PhotoController.route('/all')
         var photoData = photos.map(function(photo){
           return photo.file;
         })
-        res.send(photoData);
+        res.send({ photos: photoData,
+                   success: true });
       }
     })
     // send back a particular photo or all photos in the user's feed

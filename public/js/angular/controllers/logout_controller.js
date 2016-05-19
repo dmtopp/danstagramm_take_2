@@ -7,9 +7,9 @@ App.controller('logoutController', function($scope, $http, $state, $cookies) {
   $cookies.remove('loggedIn');
   $cookies.remove('username');
 
-  console.log($cookies.getAll());
+  $scope.changeLogin();
 
-  $state.go('parent.login');
+  $state.go('parent.login-signup');
 
   $scope.message = "You are now logged out.  See ya around!";
 })
