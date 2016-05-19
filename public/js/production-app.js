@@ -37,10 +37,10 @@ App.config(function($stateProvider, $urlRouterProvider){
       templateUrl : '/views/pages/home.html',
       controller  : 'homeController'
     })
-    .state('parent.login', {
-      url: '/login',
-      templateUrl : '/views/pages/login.html',
-      controller  : 'loginController'
+    .state('parent.login-signup', {
+      url: '/login-signup',
+      templateUrl : '/views/pages/loginSignup.html',
+      controller  : 'loginSignupController'
     })
     .state('parent.upload', {
       url: '/upload',
@@ -51,11 +51,6 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/update',
       templateUrl : '/views/pages/update_account.html',
       controller  : 'updateController'
-    })
-    .state('parent.signup', {
-      url: '/signup',
-      templateUrl : '/views/pages/signup.html',
-      controller  : 'signupController'
     })
     .state('parent.logout', {
       url: '/logout',
@@ -2799,14 +2794,11 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('loginController', function($scope, $http, $state, $cookies){
+App.controller('loginSignupController', function($scope, $http, $state, $cookies){
 
-  $scope.message = 'Pls login to use all the sweet Danstagramm features';
+  $scope.message = 'check out the new/improved login/signupt controller brah';
 
-  var all = $cookies.getAll();
-  // console.log(all);
-
-  $scope.submit = function(){
+  $scope.loginSubmit = function(){
     var data = {
       username: $scope.username,
       password: $scope.password,
@@ -2841,43 +2833,10 @@ App.controller('loginController', function($scope, $http, $state, $cookies){
 
     }
 
-  }
-});
-
-var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
-
-App.controller('logoutController', function($scope, $http, $state, $cookies) {
+  } // end login-submit
 
 
-  $cookies.remove('token');
-  $cookies.remove('loggedIn');
-  $cookies.remove('username');
-
-  console.log($cookies.getAll());
-
-  $state.go('parent.login');
-
-  $scope.message = "You are now logged out.  See ya around!";
-})
-
-var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
-
-App.controller('parentController', function($scope) {
-  
-})
-
-var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
-
-App.controller('signupController', function($scope, $http, $state, $cookies){
-
-  $scope.message = "check out the signup controller!"
-
-  var all = $cookies.getAll();
-  // console.log(all);
-
-  console.log($cookies.get('loggedIn'));
-
-  $scope.submit = function(){
+  $scope.signupSubmit = function(){
     var data = {
       username: $scope.username,
       password: $scope.password,
@@ -2910,8 +2869,31 @@ App.controller('signupController', function($scope, $http, $state, $cookies){
 
     }
 
-  }
+  } // end signup-submit
+
 });
+
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+
+App.controller('logoutController', function($scope, $http, $state, $cookies) {
+
+
+  $cookies.remove('token');
+  $cookies.remove('loggedIn');
+  $cookies.remove('username');
+
+  console.log($cookies.getAll());
+
+  $state.go('parent.login');
+
+  $scope.message = "You are now logged out.  See ya around!";
+})
+
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+
+App.controller('parentController', function($scope) {
+  
+})
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 

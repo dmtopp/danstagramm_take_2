@@ -37,10 +37,10 @@ App.config(function($stateProvider, $urlRouterProvider){
       templateUrl : '/views/pages/home.html',
       controller  : 'homeController'
     })
-    .state('parent.login', {
-      url: '/login',
-      templateUrl : '/views/pages/login.html',
-      controller  : 'loginController'
+    .state('parent.login-signup', {
+      url: '/login-signup',
+      templateUrl : '/views/pages/loginSignup.html',
+      controller  : 'loginSignupController'
     })
     .state('parent.upload', {
       url: '/upload',
@@ -51,11 +51,6 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/update',
       templateUrl : '/views/pages/update_account.html',
       controller  : 'updateController'
-    })
-    .state('parent.signup', {
-      url: '/signup',
-      templateUrl : '/views/pages/signup.html',
-      controller  : 'signupController'
     })
     .state('parent.logout', {
       url: '/logout',

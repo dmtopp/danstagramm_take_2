@@ -1,0 +1,25 @@
+<div ng-controller="loginSignupController">
+
+  <div class="six columns">
+    <form action="/" method="post">
+      <input type="text" placeholder="username" ng-model="username">
+      <input type="text" placeholder="password" ng-model="password">
+      <button type="button" ng-click="loginSubmit()">Submit</button>
+    </form>
+  </div>
+
+
+  <div class="six columns">
+    <form action="/" method="post">
+      <input type="text" placeholder="username" ng-model="username">
+      <input type="text" placeholder="password" ng-model="password">
+      <input type="text" placeholder="confirm password" ng-model="confirmPassword">
+      <button type="button" ng-click="signupSubmit()">Submit</button>
+    </form>
+  </div>
+
+  <div class="twelve columns">
+    <small>{{ message }}</small>
+  </div>
+
+</div>
