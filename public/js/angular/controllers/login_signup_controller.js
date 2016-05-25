@@ -1,9 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('loginSignupController', function($scope, $http, $state, $cookies){
-
-  $scope.message = 'Please log in or sign up to use Danstagramm!';
-
   $scope.loginSubmit = function(){
     var data = {
       username: $scope.loginUsername,
@@ -13,7 +10,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
     $scope.password = '';
 
     if (!data.username || !data.password){
-      $scope.message = "please fill out all fields.  thxxxxx";
+      $scope.changeMessage("please fill out all fields.  thxxxxx");
     } else{
 
       $scope.username = '';
@@ -27,11 +24,13 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         if (res.data.success){
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
+          $cookies.put('userId', res.data.id);
           $cookies.put('loggedIn', true);
           $scope.changeLogin();
+          $scope.changeMessage('');
           $state.go('parent.home');
         } else{
-          $scope.message = "incorrect password plz try agin";
+          $scope.changeMessage("incorrect password plz try agin");
         }
 
       }, function(err){
@@ -54,10 +53,10 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
     $scope.confirmPassword = '';
 
     if (!data.username || !data.password || !data.confirmPassword){
-      $scope.message = "please fill out all fields.  thxxxxx";
+      $scope.changeMessage("please fill out all fields.  thxxxxx");
     }
     else if(data.password != data.confirmPassword){
-      $scope.message = "passwords do not match :(";
+      $scope.changeMessage("passwords do not match :(");
     } else{
 
       $scope.username = '';
@@ -68,7 +67,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         data: data
       }).then(function(res){
         console.log(res.data);
-        $scope.message = res.data;
+        $scope.changeMessage('Account created!');
       }, function(err){
         console.log(err);
       })

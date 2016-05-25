@@ -16,6 +16,7 @@ UserController.route('/login')
     User.findOne({ username: req.body.username }, 'password', function(err, person){
       if (err) console.log(err);
       else {
+        console.log(person);
         // compare password with the one in the database
         bcrypt.compare(req.body.password, person.password, function(err, matched){
           var response = {};
@@ -25,6 +26,7 @@ UserController.route('/login')
             response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 60*60 });
             response.message = "Success!";
             response.success = true;
+            response.id = person._id;
 
           } else {
             response.message = "Wrong Password!  Please try again.";

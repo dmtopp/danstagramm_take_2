@@ -2761,14 +2761,11 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('homeController', function($scope, $http, $state, $cookies){
-
-  console.log($scope.$parent);
-
-  $scope.message = 'Check out the home controller!';
-
+  // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
 
   if (!$cookies.get('loggedIn')) {
+    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
     $state.go('parent.login-signup');
   }
 
@@ -2791,9 +2788,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('loginSignupController', function($scope, $http, $state, $cookies){
-
-  $scope.message = 'Please log in or sign up to use Danstagramm!';
-
   $scope.loginSubmit = function(){
     var data = {
       username: $scope.loginUsername,
@@ -2803,7 +2797,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
     $scope.password = '';
 
     if (!data.username || !data.password){
-      $scope.message = "please fill out all fields.  thxxxxx";
+      $scope.changeMessage("please fill out all fields.  thxxxxx");
     } else{
 
       $scope.username = '';
@@ -2817,11 +2811,13 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         if (res.data.success){
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
+          $cookies.put('userId', res.data.id);
           $cookies.put('loggedIn', true);
           $scope.changeLogin();
+          $scope.changeMessage('');
           $state.go('parent.home');
         } else{
-          $scope.message = "incorrect password plz try agin";
+          $scope.changeMessage("incorrect password plz try agin");
         }
 
       }, function(err){
@@ -2844,10 +2840,10 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
     $scope.confirmPassword = '';
 
     if (!data.username || !data.password || !data.confirmPassword){
-      $scope.message = "please fill out all fields.  thxxxxx";
+      $scope.changeMessage("please fill out all fields.  thxxxxx");
     }
     else if(data.password != data.confirmPassword){
-      $scope.message = "passwords do not match :(";
+      $scope.changeMessage("passwords do not match :(");
     } else{
 
       $scope.username = '';
@@ -2858,7 +2854,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         data: data
       }).then(function(res){
         console.log(res.data);
-        $scope.message = res.data;
+        $scope.changeMessage('Account created!');
       }, function(err){
         console.log(err);
       })
@@ -2879,23 +2875,27 @@ App.controller('logoutController', function($scope, $http, $state, $cookies) {
   $cookies.remove('username');
 
   $scope.changeLogin();
-
+  $scope.changeMessage("You are now logged out.  See ya around!");
+  
   $state.go('parent.login-signup');
 
-  $scope.message = "You are now logged out.  See ya around!";
+
 })
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('parentController', function($scope, $state) {
+App.controller('parentController', function($scope, $state, $cookies) {
   $state.go('parent.home');
 
-  $scope.lol = false;
-  $scope.lolol = true;
-  $scope.loggedIn = false;
+  $scope.loggedIn = $cookies.get('loggedIn');
+  $scope.parentMessage = '';
 
   $scope.changeLogin = function() {
     $scope.loggedIn = !$scope.loggedIn;
+  }
+
+  $scope.changeMessage = function(message) {
+    $scope.parentMessage = message;
   }
 
 
@@ -2929,10 +2929,10 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
     $scope.confirmNewPassword = '';
 
     if (!data.username || !data.password || !data.newPassword || !data.confirmNewPassword){
-      $scope.message = "please fill out all fields.  thxxxxx";
+      $scope.changeMessage("please fill out all fields.  thxxxxx");
     }
     else if(data.newPassword != data.confirmNewPassword){
-      $scope.message = "passwords do not match :(";
+      $scope.changeMessage("passwords do not match :(");
     } else{
 
       $scope.username = '';
@@ -2942,9 +2942,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
         url: '/users/update',
         data: data
       }).then(function(res){
-        // console.log(res.data);
-        $scope.message = 'success!';
-        // $scope.go('/');
+        $scope.changeMessage('Account data updated!');
       }, function(err){
         console.log(err);
       })
@@ -2957,9 +2955,6 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('uploadController', function($scope, Upload, $state, $http, $cookies){
-
-  $scope.message = 'Check out the upload controller!';
-
   // var all = $cookies.getAll();
   // console.log(all);
 
@@ -2971,14 +2966,10 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
 
   // submit function triggers on button click
   $scope.submit = function() {
-    // I honestly do not know what $scope.form.file.$valid is checking but the
-    // guy who wrote this angular module used it so I went ahead and checked it as well.
-    // My guess is it has something to do with checking that the file is actually there
-    // and/or checking the file type.
-
-    // the rest of this just grabs the file though
     if ($scope.form.file.$valid && $scope.file) {
       $scope.upload($scope.file);
+    } else {
+      $scope.changeMessage("Please select a picture first!");
     }
   };
 
@@ -2991,15 +2982,17 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           method: 'post',
           url: '/photos/upload',
           data: { file: base64,
-                  uploader: "me",
+                  uploader: $cookies.get('username'),
                   uploader_id: "1",
-                  caption: "The best photo like ever",
-                  likes: 10,
+                  caption: $scope.caption,
+                  likes: 0,
                   comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
                 }
         }).then(function(res){
-          // console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
+          $scope.changeMessage("Upload successful!");
+          $state.go('parent.home');
         }, function(err){
+          $scope.changeMessage("There was an error!  Please try again.");
           console.log('oh no!');
           console.log(err);
         })

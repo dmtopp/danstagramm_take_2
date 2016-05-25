@@ -26,10 +26,10 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
     $scope.confirmNewPassword = '';
 
     if (!data.username || !data.password || !data.newPassword || !data.confirmNewPassword){
-      $scope.message = "please fill out all fields.  thxxxxx";
+      $scope.changeMessage("please fill out all fields.  thxxxxx");
     }
     else if(data.newPassword != data.confirmNewPassword){
-      $scope.message = "passwords do not match :(";
+      $scope.changeMessage("passwords do not match :(");
     } else{
 
       $scope.username = '';
@@ -39,9 +39,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
         url: '/users/update',
         data: data
       }).then(function(res){
-        // console.log(res.data);
-        $scope.message = 'success!';
-        // $scope.go('/');
+        $scope.changeMessage('Account data updated!');
       }, function(err){
         console.log(err);
       })

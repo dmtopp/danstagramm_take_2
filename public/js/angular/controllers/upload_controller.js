@@ -1,9 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('uploadController', function($scope, Upload, $state, $http, $cookies){
-
-  $scope.message = 'Check out the upload controller!';
-
   // var all = $cookies.getAll();
   // console.log(all);
 
@@ -15,14 +12,10 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
 
   // submit function triggers on button click
   $scope.submit = function() {
-    // I honestly do not know what $scope.form.file.$valid is checking but the
-    // guy who wrote this angular module used it so I went ahead and checked it as well.
-    // My guess is it has something to do with checking that the file is actually there
-    // and/or checking the file type.
-
-    // the rest of this just grabs the file though
     if ($scope.form.file.$valid && $scope.file) {
       $scope.upload($scope.file);
+    } else {
+      $scope.changeMessage("Please select a picture first!");
     }
   };
 
@@ -35,15 +28,17 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           method: 'post',
           url: '/photos/upload',
           data: { file: base64,
-                  uploader: "me",
-                  uploader_id: "1",
-                  caption: "The best photo like ever",
-                  likes: 10,
+                  uploader: $cookies.get('username'),
+                  uploader_id: $cookies.get('userId'),
+                  caption: $scope.caption,
+                  likes: 0,
                   comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
                 }
         }).then(function(res){
-          // console.log('Success! ' + res.status + ' ' + res.statusText + ' ' + res.data);
+          $scope.changeMessage("Upload successful!");
+          $state.go('parent.home');
         }, function(err){
+          $scope.changeMessage("There was an error!  Please try again.");
           console.log('oh no!');
           console.log(err);
         })

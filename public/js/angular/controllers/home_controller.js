@@ -1,14 +1,11 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('homeController', function($scope, $http, $state, $cookies){
-
-  console.log($scope.$parent);
-
-  $scope.message = 'Check out the home controller!';
-
+  // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
 
   if (!$cookies.get('loggedIn')) {
+    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
     $state.go('parent.login-signup');
   }
 

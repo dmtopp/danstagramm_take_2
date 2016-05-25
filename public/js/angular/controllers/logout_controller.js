@@ -8,8 +8,9 @@ App.controller('logoutController', function($scope, $http, $state, $cookies) {
   $cookies.remove('username');
 
   $scope.changeLogin();
-
+  $scope.changeMessage("You are now logged out.  See ya around!");
+  
   $state.go('parent.login-signup');
 
-  $scope.message = "You are now logged out.  See ya around!";
+
 })

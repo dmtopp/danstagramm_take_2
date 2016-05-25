@@ -44,7 +44,12 @@ PhotoController.route('/all')
       if (err) console.log(err);
       else {
         var photoData = photos.map(function(photo){
-          return photo.file;
+          return { photo: photo.file,
+                   uploader: photo.uploader,
+                   uploaderId: photo.uploader_id,
+                   caption: photo.caption,
+                   likes: photo.likes,
+                   comments: photo.comments }
         })
         res.send({ photos: photoData,
                    success: true });

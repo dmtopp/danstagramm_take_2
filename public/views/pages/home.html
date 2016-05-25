@@ -1,6 +1,5 @@
 <div class='row' ng-controller="homeController">
-  <small>{{ message }}</small>
   <div ng-repeat="photo in photos">
-    <img ng-src="{{ photo }}" />
+    <img ng-src="{{ photo.file }}" />
   </div>
 </div>

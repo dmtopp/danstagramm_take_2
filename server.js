@@ -15,17 +15,12 @@ require('./db/database.js');
 // ---------------------------------
 app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
-// app.engine('hbs', exphbs({
-//   defaultLayout: 'index',
-//   extname: 'hbs'
-// }));
-// app.set('view engine', 'hbs');
 
 
 
 // config stuff for bodyParser
 // ---------------------------
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
