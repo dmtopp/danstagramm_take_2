@@ -44,7 +44,7 @@ PhotoController.route('/all')
       if (err) console.log(err);
       else {
         var photoData = photos.map(function(photo){
-          return { photo: photo.file,
+          return { file: photo.file,
                    uploader: photo.uploader,
                    uploaderId: photo.uploader_id,
                    caption: photo.caption,

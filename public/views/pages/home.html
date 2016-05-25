@@ -1,5 +1,8 @@
 <div class='row' ng-controller="homeController">
   <div ng-repeat="photo in photos">
     <img ng-src="{{ photo.file }}" />
-  </div>
+    <small>{{ photo.caption }}</small>
+    <small>Uploaded by {{ photo.uploader }}.  {{ photo.likes }} likes.</small>
+    <small>{{ photo.comments.length }} comments.</small>
+   </div>
 </div>

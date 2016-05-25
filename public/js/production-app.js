@@ -2983,7 +2983,7 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           url: '/photos/upload',
           data: { file: base64,
                   uploader: $cookies.get('username'),
-                  uploader_id: "1",
+                  uploader_id: $cookies.get('userId'),
                   caption: $scope.caption,
                   likes: 0,
                   comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
