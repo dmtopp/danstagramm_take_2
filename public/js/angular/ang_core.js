@@ -1,26 +1,5 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.factory("loginManager", ['$cookies',
-  function($cookies){
-    var username = '';
-
-    return {
-			setCookieData: function(username) {
-				userName = username;
-				$cookies.put("userName", username);
-			},
-			getCookieData: function() {
-				userName = $cookies.get("userName");
-				return userName;
-			},
-			clearCookieData: function() {
-				userName = "";
-				$cookies.remove("userName");
-			}
-		}
-
-}])
-
 App.config(function($stateProvider, $urlRouterProvider){
   // Map our angular controllers to our different views
 

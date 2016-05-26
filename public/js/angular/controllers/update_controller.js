@@ -7,8 +7,6 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
   var all = $cookies.getAll();
   // console.log(all);
 
-  console.log($cookies.get('loggedIn'));
-
   if (!$cookies.get('loggedIn')) {
     $state.go('parent.login-signup');
   }
