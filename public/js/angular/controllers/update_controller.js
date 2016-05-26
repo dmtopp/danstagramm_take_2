@@ -11,13 +11,13 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
     $state.go('parent.login-signup');
   }
 
-  $scope.submit = function(){
+  $scope.submit = function() {
     var data = {
       username: $scope.username,
       password: $scope.password,
       newPassword: $scope.newPassword,
       confirmNewPassword: $scope.confirmNewPassword
-    }
+    };
 
     $scope.password = '';
     $scope.newPassword = '';
@@ -28,7 +28,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
     }
     else if(data.newPassword != data.confirmNewPassword){
       $scope.changeMessage("passwords do not match :(");
-    } else{
+    } else {
 
       $scope.username = '';
 
@@ -40,9 +40,9 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
         $scope.changeMessage('Account data updated!');
       }, function(err){
         console.log(err);
-      })
+      });
 
     }
 
-  }
-})
+  };
+});

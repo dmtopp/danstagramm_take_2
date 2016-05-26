@@ -5,7 +5,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
     var data = {
       username: $scope.loginUsername,
       password: $scope.loginPassword,
-    }
+    };
 
     $scope.password = '';
 
@@ -35,11 +35,11 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
 
       }, function(err){
         console.log(err);
-      })
+      });
 
     }
 
-  } // end login-submit
+  }; // end login-submit
 
 
   $scope.signupSubmit = function(){
@@ -47,7 +47,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
       username: $scope.signupUsername,
       password: $scope.signupPassword,
       confirmPassword: $scope.confirmPassword
-    }
+    };
 
     $scope.password = '';
     $scope.confirmPassword = '';
@@ -70,10 +70,10 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         $scope.changeMessage('Account created!');
       }, function(err){
         console.log(err);
-      })
+      });
 
     }
 
-  } // end signup-submit
+  }; // end signup-submit
 
 });

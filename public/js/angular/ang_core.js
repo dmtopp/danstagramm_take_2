@@ -36,4 +36,4 @@ App.config(function($stateProvider, $urlRouterProvider){
       templateUrl : '/views/pages/home.html',
       controller  : 'logoutController'
     });
-})
+});

@@ -8,11 +8,11 @@ App.controller('parentController', function($scope, $state, $cookies) {
 
   $scope.changeLogin = function() {
     $scope.loggedIn = !$scope.loggedIn;
-  }
+  };
 
   $scope.changeMessage = function(message) {
     $scope.parentMessage = message;
-  }
+  };
 
 
-})
+});

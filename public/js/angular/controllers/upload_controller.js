@@ -41,9 +41,9 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           $scope.changeMessage("There was an error!  Please try again.");
           console.log('oh no!');
           console.log(err);
-        })
+        });
 
-      })
+      });
 
     };
 

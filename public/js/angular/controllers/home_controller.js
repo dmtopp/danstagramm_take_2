@@ -18,9 +18,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
     $scope.photos = res.data.photos;
   }, function(err){
     console.log(err);
-  })
-
-
-
+  });
 
 });
