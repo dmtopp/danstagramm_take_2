@@ -6,7 +6,7 @@ var photoSchema = new mongoose.Schema({
   uploader: String,
   uploader_id: String,
   caption: String,
-  likes: Number,
+  likes: Array,
   comments: Array
 })
 

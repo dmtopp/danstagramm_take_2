@@ -1,26 +1,5 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-// App.factory("loginManager", ['$cookies',
-//   function($cookies){
-//     var username = '';
-//
-//     return {
-// 			setCookieData: function(username) {
-// 				userName = username;
-// 				$cookies.put("userName", username);
-// 			},
-// 			getCookieData: function() {
-// 				userName = $cookies.get("userName");
-// 				return userName;
-// 			},
-// 			clearCookieData: function() {
-// 				userName = "";
-// 				$cookies.remove("userName");
-// 			}
-// 		}
-//
-// }])
-
 App.config(function($stateProvider, $urlRouterProvider){
   // Map our angular controllers to our different views
 
@@ -57,7 +36,7 @@ App.config(function($stateProvider, $urlRouterProvider){
       templateUrl : '/views/pages/home.html',
       controller  : 'logoutController'
     });
-})
+});
 
 /**
  * @license AngularJS v1.5.5-build.4754+sha.0d7f1ed
@@ -2775,14 +2754,52 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
     method: 'get',
     url: '/photos/all'
   }).then(function(res){
+    console.log(res.data);
     $scope.photos = res.data.photos;
-  }, function(err){
+
+
+    var userId = $cookies.get('userId');
+
+    // check to see if the user's id is stored in the array of likes from the db
+    $scope.photos.forEach(function(photo) {
+      if (!photo.likes.indexOf(userId)) {
+        photo.liked = true;
+        photo.heart = '♥';
+      } else {
+        photo.liked = false;
+        photo.heart = '♡';
+      }
+    })
+
+
+
+  }, function(err) {
     console.log(err);
-  })
+  });
 
 
 
+  $scope.likeHandler = function(e) {
+    console.log('like me!');
+    console.log(this.photo.id);
+    var userId = $cookies.get('userId');
+    var self = this;
 
+    $http({
+      method: 'post',
+      url: '/photos/like',
+      data: { id: this.photo.id,
+              userId: userId }
+    }).then(function(res){
+      console.log(res);
+      self.photo.liked = true;
+      self.photo.heart = '♥';
+
+
+    }, function(err) {
+      console.log(err);
+    });
+  }
 });
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
@@ -2792,7 +2809,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
     var data = {
       username: $scope.loginUsername,
       password: $scope.loginPassword,
-    }
+    };
 
     $scope.password = '';
 
@@ -2822,11 +2839,11 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
 
       }, function(err){
         console.log(err);
-      })
+      });
 
     }
 
-  } // end login-submit
+  }; // end login-submit
 
 
   $scope.signupSubmit = function(){
@@ -2834,7 +2851,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
       username: $scope.signupUsername,
       password: $scope.signupPassword,
       confirmPassword: $scope.confirmPassword
-    }
+    };
 
     $scope.password = '';
     $scope.confirmPassword = '';
@@ -2857,11 +2874,11 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         $scope.changeMessage('Account created!');
       }, function(err){
         console.log(err);
-      })
+      });
 
     }
 
-  } // end signup-submit
+  }; // end signup-submit
 
 });
 
@@ -2876,11 +2893,11 @@ App.controller('logoutController', function($scope, $http, $state, $cookies) {
 
   $scope.changeLogin();
   $scope.changeMessage("You are now logged out.  See ya around!");
-  
+
   $state.go('parent.login-signup');
 
 
-})
+});
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
@@ -2892,14 +2909,14 @@ App.controller('parentController', function($scope, $state, $cookies) {
 
   $scope.changeLogin = function() {
     $scope.loggedIn = !$scope.loggedIn;
-  }
+  };
 
   $scope.changeMessage = function(message) {
     $scope.parentMessage = message;
-  }
+  };
 
 
-})
+});
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
@@ -2914,13 +2931,13 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
     $state.go('parent.login-signup');
   }
 
-  $scope.submit = function(){
+  $scope.submit = function() {
     var data = {
       username: $scope.username,
       password: $scope.password,
       newPassword: $scope.newPassword,
       confirmNewPassword: $scope.confirmNewPassword
-    }
+    };
 
     $scope.password = '';
     $scope.newPassword = '';
@@ -2931,7 +2948,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
     }
     else if(data.newPassword != data.confirmNewPassword){
       $scope.changeMessage("passwords do not match :(");
-    } else{
+    } else {
 
       $scope.username = '';
 
@@ -2943,16 +2960,16 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
         $scope.changeMessage('Account data updated!');
       }, function(err){
         console.log(err);
-      })
+      });
 
     }
 
-  }
-})
+  };
+});
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('uploadController', function($scope, Upload, $state, $http, $cookies){
+App.controller('uploadController', function($scope, Upload, $state, $http, $cookies) {
   // var all = $cookies.getAll();
   // console.log(all);
 
@@ -2993,9 +3010,9 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           $scope.changeMessage("There was an error!  Please try again.");
           console.log('oh no!');
           console.log(err);
-        })
+        });
 
-      })
+      });
 
     };
 

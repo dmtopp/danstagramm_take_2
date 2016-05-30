@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('uploadController', function($scope, Upload, $state, $http, $cookies){
+App.controller('uploadController', function($scope, Upload, $state, $http, $cookies) {
   // var all = $cookies.getAll();
   // console.log(all);
 

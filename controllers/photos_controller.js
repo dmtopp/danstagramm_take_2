@@ -38,13 +38,14 @@ PhotoController.route('/upload')
   })
 
 PhotoController.route('/all')
-  .get(function(req, res, next){
+  .get(function(req, res, next) {
 
     Photo.find(function(err, photos){
       if (err) console.log(err);
       else {
         var photoData = photos.map(function(photo){
           return { file: photo.file,
+                   id: photo._id,
                    uploader: photo.uploader,
                    uploaderId: photo.uploader_id,
                    caption: photo.caption,
@@ -57,5 +58,17 @@ PhotoController.route('/all')
     })
     // send back a particular photo or all photos in the user's feed
   })
+
+PhotoController.route('/like')
+  .post(function(req, res, next) {
+    Photo.findByIdAndUpdate(
+          req.body.id,
+          {$push: { "likes": req.body.userId }},
+          {new: true},
+          function(err, Photo) {
+            if (err) console.log(err);
+            else res.send('liked!');
+          });
+  });
 
 module.exports = PhotoController;

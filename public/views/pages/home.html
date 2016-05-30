@@ -1,8 +1,8 @@
 <div class='row' ng-controller="homeController">
   <div ng-repeat="photo in photos">
     <img ng-src="{{ photo.file }}" />
-    <small>{{ photo.caption }}</small>
-    <small>Uploaded by {{ photo.uploader }}.  {{ photo.likes }} likes.</small>
-    <small>{{ photo.comments.length }} comments.</small>
+    <p>{{ photo.caption }}</p>
+    <p>Uploaded by {{ photo.uploader }}.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length }} likes.</p>
+    <p>{{ photo.comments.length }} comments.</p>
    </div>
 </div>
