@@ -49,7 +49,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
     $http({
       method: 'post',
       url: '/photos/like',
-      data: { id: this.photo.id,
+      data: { photoId: this.photo.id,
               userId: userId }
     }).then(function(res){
       console.log(res);

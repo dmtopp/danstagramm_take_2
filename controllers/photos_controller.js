@@ -61,14 +61,20 @@ PhotoController.route('/all')
 
 PhotoController.route('/like')
   .post(function(req, res, next) {
-    Photo.findByIdAndUpdate(
-          req.body.id,
-          {$push: { "likes": req.body.userId }},
-          {new: true},
-          function(err, Photo) {
-            if (err) console.log(err);
-            else res.send('liked!');
-          });
+    Photo.findById(req.body.photoId, function(err, photo) {
+      if (photo.likes.indexOf(req.body.userId) >= 0) {
+        res.send('already liked, beyatch!');
+      } else {
+        photo.update(
+              {$push: { "likes": req.body.userId }},
+              {new: true},
+              function(err, Photo) {
+                if (err) console.log(err);
+                else res.send('liked!');
+              })
+      }
+    });
   });
+
 
 module.exports = PhotoController;
