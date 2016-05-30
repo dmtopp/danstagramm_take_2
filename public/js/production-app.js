@@ -2762,7 +2762,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
 
     // check to see if the user's id is stored in the array of likes from the db
     $scope.photos.forEach(function(photo) {
-      if (!photo.likes.indexOf(userId)) {
+      if (photo.likes.indexOf(userId)) {
         photo.liked = true;
         photo.heart = '♥';
       } else {
@@ -2779,22 +2779,21 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
 
 
 
-  $scope.likeHandler = function(e) {
-    console.log('like me!');
-    console.log(this.photo.id);
+  $scope.likeHandler = function() {
     var userId = $cookies.get('userId');
     var self = this;
+    console.log(this.photo);
 
     $http({
       method: 'post',
       url: '/photos/like',
-      data: { photoId: this.photo.id,
+      data: { photoId: this.photo._id,
               userId: userId }
     }).then(function(res){
       console.log(res);
+      self.photo = res.data;
       self.photo.liked = true;
       self.photo.heart = '♥';
-
 
     }, function(err) {
       console.log(err);
