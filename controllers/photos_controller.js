@@ -62,8 +62,13 @@ PhotoController.route('/all')
 PhotoController.route('/like')
   .post(function(req, res, next) {
     Photo.findById(req.body.photoId, function(err, photo) {
-      if (photo.likes.indexOf(req.body.userId) >= 0) {
-        res.send(photo);
+      var userIndex = photo.likes.indexOf(req.body.userId);
+      if (userIndex >= 0) {
+        photo.likes.splice(userIndex, 1);
+        photo.save(function(err, photo) {
+          if (err) console.log(err);
+          else res.send(photo);
+        })
       } else {
         photo.likes.push(req.body.userId);
         photo.save(function(err, photo) {
