@@ -6,9 +6,10 @@
     <a ng-show="loggedIn" ui-sref="parent.home"><button type="button">home</button></a>
     <a ng-show="loggedIn" ui-sref="parent.upload"><button type="button">upload</button></a>
     <a ng-hide="loggedIn" ui-sref="parent.login-signup"><button type="button">login</button></a>
+    <a ui-sref="parent.about"><button type="button">about</button></a>
     <a ng-show="loggedIn" ui-sref="parent.update"><button type="button">update info</button></a>
     <a ng-show="loggedIn" ui-sref="parent.logout"><button type="button">log out</button></a>
-    
+
     <small>{{ parentMessage }}</small>
 
     </p>

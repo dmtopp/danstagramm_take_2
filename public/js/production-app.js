@@ -35,6 +35,11 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/logout',
       templateUrl : '/views/pages/home.html',
       controller  : 'logoutController'
+    })
+    .state('parent.about', {
+      url: '/about',
+      templateUrl : '/views/pages/about.html',
+      controller  : 'aboutController'
     });
 });
 
@@ -2739,6 +2744,15 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
+App.controller('aboutController', function($scope, $http, $state, $cookies) {
+
+  $scope.about = "Hello and welcome to Danstagramm!  Have a wonderful day!";
+
+
+});
+
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+
 App.controller('homeController', function($scope, $http, $state, $cookies){
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
@@ -2746,34 +2760,31 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
   if (!$cookies.get('loggedIn')) {
     $scope.changeMessage('Please log in or sign up to use Danstagramm!');
     $state.go('parent.login-signup');
+  } else {
+    // http request to get feed
+    $http({
+      method: 'get',
+      url: '/photos/all'
+    }).then(function(res){
+      $scope.photos = res.data.photos;
+      var userId = $cookies.get('userId');
+
+      // check to see if the user's id is stored in the array of likes from the db
+      $scope.photos.forEach(function(photo) {
+        if (photo.likes.indexOf(userId) >= 0) {
+          photo.liked = true;
+          photo.heart = '♥';
+        } else {
+          photo.liked = false;
+          photo.heart = '♡';
+        }
+      })
+    },
+    function(err) {
+      console.log(err);
+    });
   }
 
-  // http request to get feed
-  $http({
-    method: 'get',
-    url: '/photos/all'
-  }).then(function(res){
-    $scope.photos = res.data.photos;
-
-
-    var userId = $cookies.get('userId');
-
-    // check to see if the user's id is stored in the array of likes from the db
-    $scope.photos.forEach(function(photo) {
-      if (photo.likes.indexOf(userId) >= 0) {
-        photo.liked = true;
-        photo.heart = '♥';
-      } else {
-        photo.liked = false;
-        photo.heart = '♡';
-      }
-    })
-
-
-
-  }, function(err) {
-    console.log(err);
-  });
 
 
 
@@ -2825,9 +2836,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
           photo.heart = '♡';
         }
       })
-
-
-
     }, function(err) {
       console.log(err);
     });

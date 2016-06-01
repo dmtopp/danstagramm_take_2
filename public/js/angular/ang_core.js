@@ -35,5 +35,10 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/logout',
       templateUrl : '/views/pages/home.html',
       controller  : 'logoutController'
+    })
+    .state('parent.about', {
+      url: '/about',
+      templateUrl : '/views/pages/about.html',
+      controller  : 'aboutController'
     });
 });

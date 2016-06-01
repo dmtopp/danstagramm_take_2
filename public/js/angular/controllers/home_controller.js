@@ -12,8 +12,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
     $http({
       method: 'get',
       url: '/photos/all'
-    }).then(
-    function(res){
+    }).then(function(res){
       $scope.photos = res.data.photos;
       var userId = $cookies.get('userId');
 
@@ -84,9 +83,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
           photo.heart = '♡';
         }
       })
-
-
-
     }, function(err) {
       console.log(err);
     });
