@@ -4,6 +4,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
   $scope.quantity = 10;
+  $scope.commentQty = 2;
 
   if (!$cookies.get('loggedIn')) {
     $scope.changeMessage('Please log in or sign up to use Danstagramm!');
@@ -19,6 +20,8 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
 
       // check to see if the user's id is stored in the array of likes from the db
       $scope.photos.forEach(function(photo) {
+        photo.commentQty = 0;
+        photo.expanded = false;
         if (photo.likes.indexOf(userId) >= 0) {
           photo.liked = true;
           photo.heart = '♥';
@@ -67,4 +70,13 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     }
   }
 
+  $scope.showComments = function() {
+    this.photo.commentQty = this.photo.comments.length;
+    this.photo.expanded = true;
+  }
+
+  $scope.hideComments = function() {
+    this.photo.commentQty = 0;
+    this.photo.expanded = false;
+  }
 });

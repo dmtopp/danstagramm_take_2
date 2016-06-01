@@ -3,7 +3,9 @@
     <img ng-src="{{ photo.file }}" />
     <p>{{ photo.caption }}</p>
     <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
-    <p>{{ photo.comments.length }} comments.</p>
-   </div>
-   <button class="button" ng-click="showMore()">Show more</button>
+    <p ng-repeat="comment in photo.comments | limitTo:photo.commentQty"><b>{{ comment.owner }}</b> {{ comment.comment }}</p>
+    <a ng-hide="photo.expanded" ng-click="showComments()">Show all {{ photo.comments.length }} comments.</a>
+    <a ng-show="photo.expanded" ng-click="hideComments()">Hide</a>
+  </div>
+  <button class="button" ng-click="showMore()">Show more</button>
 </div>
