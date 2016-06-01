@@ -32,9 +32,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     });
   }
 
-
-
-
   $scope.likeHandler = function() {
     var userId = $cookies.get('userId');
     var self = this;
@@ -57,35 +54,5 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     }, function(err) {
       console.log(err);
     });
-  }
-
-  $scope.getUserPhotos = function() {
-    var self = this;
-
-    console.log(self.photo);
-
-    $http({
-      method: 'get',
-      url: '/photos/' + self.photo.uploader_id
-    }).then(function(res){
-      console.log(res.data);
-      $scope.photos = res.data.photos;
-
-      var userId = $cookies.get('userId');
-
-      // check to see if the user's id is stored in the array of likes from the db
-      $scope.photos.forEach(function(photo) {
-        if (photo.likes.indexOf(userId) >= 0) {
-          photo.liked = true;
-          photo.heart = '♥';
-        } else {
-          photo.liked = false;
-          photo.heart = '♡';
-        }
-      })
-    }, function(err) {
-      console.log(err);
-    });
-
   }
 });

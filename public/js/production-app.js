@@ -42,7 +42,7 @@ App.config(function($stateProvider, $urlRouterProvider){
       controller  : 'aboutController'
     })
     .state('parent.user-page', {
-      url: '/user-page/:id',
+      url: '/user-page/:uploader_id',
       templateUrl : '/views/pages/home.html',
       controller  : 'userPageController'
     });
@@ -2790,9 +2790,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     });
   }
 
-
-
-
   $scope.likeHandler = function() {
     var userId = $cookies.get('userId');
     var self = this;
@@ -2815,36 +2812,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     }, function(err) {
       console.log(err);
     });
-  }
-
-  $scope.getUserPhotos = function() {
-    var self = this;
-
-    console.log(self.photo);
-
-    $http({
-      method: 'get',
-      url: '/photos/' + self.photo.uploader_id
-    }).then(function(res){
-      console.log(res.data);
-      $scope.photos = res.data.photos;
-
-      var userId = $cookies.get('userId');
-
-      // check to see if the user's id is stored in the array of likes from the db
-      $scope.photos.forEach(function(photo) {
-        if (photo.likes.indexOf(userId) >= 0) {
-          photo.liked = true;
-          photo.heart = '♥';
-        } else {
-          photo.liked = false;
-          photo.heart = '♡';
-        }
-      })
-    }, function(err) {
-      console.log(err);
-    });
-
   }
 });
 
@@ -3066,6 +3033,35 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('userPageController', function($scope, $http, $state, $cookies, $stateParams) {
-  $scope.changeMessage($stateParams);
-  console.log($stateParams);
+  $http.defaults.headers.common.Authorization = $cookies.get('token');
+
+  if (!$cookies.get('loggedIn')) {
+    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
+    $state.go('parent.login-signup');
+  } else {
+    // http request to get users's photos
+    $http({
+      method: 'get',
+      url: '/photos/' + $stateParams.uploader_id
+    }).then(function(res){
+      console.log(res.data);
+      $scope.photos = res.data.photos;
+
+      var userId = $cookies.get('userId');
+
+      // check to see if the user's id is stored in the array of likes from the db
+      $scope.photos.forEach(function(photo) {
+        if (photo.likes.indexOf(userId) >= 0) {
+          photo.liked = true;
+          photo.heart = '♥';
+        } else {
+          photo.liked = false;
+          photo.heart = '♡';
+        }
+      })
+    }, function(err) {
+      console.log(err);
+    });
+  }
+
 });
