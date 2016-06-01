@@ -103,8 +103,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       console.log(err);
     });
 
-
-
     this.photo.comment = '';
   }
 });
