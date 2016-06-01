@@ -1,8 +1,9 @@
 <div class='row'>
-  <div ng-repeat="photo in photos">
+  <div ng-repeat="photo in photos | limitTo:quantity">
     <img ng-src="{{ photo.file }}" />
     <p>{{ photo.caption }}</p>
     <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
     <p>{{ photo.comments.length }} comments.</p>
    </div>
+   <button class="button" ng-click="showMore()">Show more</button>
 </div>

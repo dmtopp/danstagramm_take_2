@@ -3,6 +3,7 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
+  $scope.quantity = 10;
 
   if (!$cookies.get('loggedIn')) {
     $scope.changeMessage('Please log in or sign up to use Danstagramm!');
@@ -57,4 +58,13 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       console.log(err);
     });
   }
+
+  $scope.showMore = function() {
+    if ($scope.quantity >= $scope.photos.length) {
+      $scope.changeMessage("There are no more photos to display!");
+    } else {
+      $scope.quantity += 10;
+    }
+  }
+
 });

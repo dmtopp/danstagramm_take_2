@@ -2761,6 +2761,7 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
+  $scope.quantity = 10;
 
   if (!$cookies.get('loggedIn')) {
     $scope.changeMessage('Please log in or sign up to use Danstagramm!');
@@ -2786,6 +2787,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       })
     },
     function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
   }
@@ -2810,9 +2812,19 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       }
 
     }, function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
   }
+
+  $scope.showMore = function() {
+    if ($scope.quantity >= $scope.photos.length) {
+      $scope.changeMessage("There are no more photos to display!");
+    } else {
+      $scope.quantity += 10;
+    }
+  }
+
 });
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
@@ -2837,7 +2849,6 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         url: '/users/login',
         data: data
       }).then(function(res){
-        // console.log(res.data);
         if (res.data.success){
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
@@ -2883,9 +2894,9 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         url: '/users/signup',
         data: data
       }).then(function(res){
-        console.log(res.data);
         $scope.changeMessage('Account created!');
       }, function(err){
+        $scope.changeMessage("There was an error!  Please try again.");
         console.log(err);
       });
 
@@ -2934,10 +2945,6 @@ App.controller('parentController', function($scope, $state, $cookies) {
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('updateController', function($scope, $http, $state, $cookies){
-
-  var all = $cookies.getAll();
-  // console.log(all);
-
   if (!$cookies.get('loggedIn')) {
     $state.go('parent.login-signup');
   }
@@ -2970,6 +2977,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
       }).then(function(res){
         $scope.changeMessage('Account data updated!');
       }, function(err){
+        $scope.changeMessage("There was an error!  Please try again.");
         console.log(err);
       });
 
@@ -2981,11 +2989,6 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('uploadController', function($scope, Upload, $state, $http, $cookies) {
-  // var all = $cookies.getAll();
-  // console.log(all);
-
-  console.log($cookies.get('loggedIn'));
-
   if (!$cookies.get('loggedIn')) {
     $state.go('parent.login-signup');
   }
@@ -3019,7 +3022,6 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           $state.go('parent.home');
         }, function(err){
           $scope.changeMessage("There was an error!  Please try again.");
-          console.log('oh no!');
           console.log(err);
         });
 
@@ -3044,7 +3046,6 @@ App.controller('userPageController', function($scope, $http, $state, $cookies, $
       method: 'get',
       url: '/photos/' + $stateParams.uploader_id
     }).then(function(res){
-      console.log(res.data);
       $scope.photos = res.data.photos;
 
       var userId = $cookies.get('userId');
@@ -3060,8 +3061,42 @@ App.controller('userPageController', function($scope, $http, $state, $cookies, $
         }
       })
     }, function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
+  }
+
+  $scope.likeHandler = function() {
+    var userId = $cookies.get('userId');
+    var self = this;
+
+    $http({
+      method: 'post',
+      url: '/photos/like',
+      data: { photoId: this.photo._id,
+              userId: userId }
+    }).then(function(res){
+      self.photo = res.data;
+      if (self.photo.likes.indexOf(userId) >= 0) {
+        self.photo.liked = true;
+        self.photo.heart = '♥';
+      } else {
+        self.photo.liked = false;
+        self.photo.heart = '♡';
+      }
+
+    }, function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
+      console.log(err);
+    });
+  }
+
+  $scope.showMore = function() {
+    if ($scope.quantity >= $scope.photos.length) {
+      $scope.changeMessage("There are no more photos to display!");
+    } else {
+      $scope.quantity += 10;
+    }
   }
 
 });
