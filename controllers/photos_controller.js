@@ -87,5 +87,20 @@ PhotoController.route('/:userId')
     })
   })
 
+PhotoController.route('/comment')
+  .post(function(req, res, next) {
+    Photo.findById(req.body.photoId, function(err, photo) {
+      var comment = { comment: req.body.comment,
+                      owner: req.body.username,
+                      owner_id: req.body.owner_id }
+
+      photo.comments.push(comment);
+      photo.save(function(err, photo) {
+        if (err) console.log(err);
+        else res.send(photo);
+      })
+    });
+
+  })
 
 module.exports = PhotoController;

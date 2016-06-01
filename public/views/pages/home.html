@@ -2,10 +2,11 @@
   <div ng-repeat="photo in photos | limitTo:quantity">
     <img ng-src="{{ photo.file }}" />
     <p>{{ photo.caption }}</p>
-    <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
+    <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length }} likes.</p>
     <p ng-repeat="comment in photo.comments | limitTo:photo.commentQty"><b>{{ comment.owner }}</b> {{ comment.comment }}</p>
-    <a ng-hide="photo.expanded" ng-click="showComments()">Show all {{ photo.comments.length }} comments.</a>
-    <a ng-show="photo.expanded" ng-click="hideComments()">Hide</a>
+    <a ng-hide="photo.expanded" ng-click="showComments()">Show all {{ photo.comments.length }} comments</a>
+    <a ng-show="photo.expanded" ng-click="hideComments()">Hide comments</a>
+    <input type="text" ng-model="photo.comment" /><button ng-click="commentSubmit()">Submit</button>
   </div>
-  <button class="button" ng-click="showMore()">Show more</button>
+  <button ng-click="showMore()">Show more</button>
 </div>
