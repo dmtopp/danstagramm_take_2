@@ -52,7 +52,7 @@ PhotoController.route('/all')
                    likes: photo.likes,
                    comments: photo.comments }
         })
-        res.send({ photos: photoData,
+        res.send({ photos: photos,
                    success: true });
       }
     })

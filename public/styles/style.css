@@ -2,4 +2,7 @@ img {
   height: 200px;
   width: auto; }
 
+a[ng-click] {
+  cursor: pointer; }
+
 /*# sourceMappingURL=style.css.map */

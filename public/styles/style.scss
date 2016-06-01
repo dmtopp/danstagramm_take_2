@@ -2,3 +2,7 @@ img {
   height: 200px;
   width: auto;
 }
+
+a[ng-click] {
+  cursor: pointer;
+}

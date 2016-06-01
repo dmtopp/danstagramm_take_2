@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('homeController', function($scope, $http, $state, $cookies){
+App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
 
@@ -62,11 +62,11 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
   $scope.getUserPhotos = function() {
     var self = this;
 
-    console.log(self.photo.uploaderId);
+    console.log(self.photo);
 
     $http({
       method: 'get',
-      url: '/photos/' + self.photo.uploaderId
+      url: '/photos/' + self.photo.uploader_id
     }).then(function(res){
       console.log(res.data);
       $scope.photos = res.data.photos;

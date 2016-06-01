@@ -40,5 +40,10 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/about',
       templateUrl : '/views/pages/about.html',
       controller  : 'aboutController'
+    })
+    .state('parent.user-page', {
+      url: '/user-page/:uploader_id',
+      templateUrl : '/views/pages/home.html',
+      controller  : 'userPageController'
     });
 });

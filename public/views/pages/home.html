@@ -1,8 +1,8 @@
-<div class='row' ng-controller="homeController">
+<div class='row'>
   <div ng-repeat="photo in photos">
     <img ng-src="{{ photo.file }}" />
     <p>{{ photo.caption }}</p>
-    <p>Uploaded by <span ng-click='getUserPhotos()'>{{ photo.uploader }}</span>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
+    <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
     <p>{{ photo.comments.length }} comments.</p>
    </div>
 </div>

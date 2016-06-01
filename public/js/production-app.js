@@ -40,6 +40,11 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/about',
       templateUrl : '/views/pages/about.html',
       controller  : 'aboutController'
+    })
+    .state('parent.user-page', {
+      url: '/user-page/:id',
+      templateUrl : '/views/pages/home.html',
+      controller  : 'userPageController'
     });
 });
 
@@ -2753,7 +2758,7 @@ App.controller('aboutController', function($scope, $http, $state, $cookies) {
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('homeController', function($scope, $http, $state, $cookies){
+App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
 
@@ -2815,11 +2820,11 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
   $scope.getUserPhotos = function() {
     var self = this;
 
-    console.log(self.photo.uploaderId);
+    console.log(self.photo);
 
     $http({
       method: 'get',
-      url: '/photos/' + self.photo.uploaderId
+      url: '/photos/' + self.photo.uploader_id
     }).then(function(res){
       console.log(res.data);
       $scope.photos = res.data.photos;
@@ -2963,8 +2968,6 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 
 App.controller('updateController', function($scope, $http, $state, $cookies){
 
-  $scope.message = 'Check out the update controller!';
-
   var all = $cookies.getAll();
   // console.log(all);
 
@@ -3058,4 +3061,11 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
     };
 
 
+});
+
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+
+App.controller('userPageController', function($scope, $http, $state, $cookies, $stateParams) {
+  $scope.changeMessage($stateParams);
+  console.log($stateParams);
 });

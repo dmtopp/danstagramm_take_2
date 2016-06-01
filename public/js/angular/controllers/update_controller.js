@@ -2,8 +2,6 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 
 App.controller('updateController', function($scope, $http, $state, $cookies){
 
-  $scope.message = 'Check out the update controller!';
-
   var all = $cookies.getAll();
   // console.log(all);
 
