@@ -12,7 +12,6 @@ App.controller('userPageController', function($scope, $http, $state, $cookies, $
       method: 'get',
       url: '/photos/' + $stateParams.uploader_id
     }).then(function(res){
-      console.log(res.data);
       $scope.photos = res.data.photos;
 
       var userId = $cookies.get('userId');
@@ -28,6 +27,7 @@ App.controller('userPageController', function($scope, $http, $state, $cookies, $
         }
       })
     }, function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
   }

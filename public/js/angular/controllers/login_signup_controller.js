@@ -20,7 +20,6 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         url: '/users/login',
         data: data
       }).then(function(res){
-        // console.log(res.data);
         if (res.data.success){
           $cookies.put('token', res.data.token);
           $cookies.put('username', data.username);
@@ -66,9 +65,9 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
         url: '/users/signup',
         data: data
       }).then(function(res){
-        console.log(res.data);
         $scope.changeMessage('Account created!');
       }, function(err){
+        $scope.changeMessage("There was an error!  Please try again.");
         console.log(err);
       });
 

@@ -1,10 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('updateController', function($scope, $http, $state, $cookies){
-
-  var all = $cookies.getAll();
-  // console.log(all);
-
   if (!$cookies.get('loggedIn')) {
     $state.go('parent.login-signup');
   }
@@ -37,6 +33,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
       }).then(function(res){
         $scope.changeMessage('Account data updated!');
       }, function(err){
+        $scope.changeMessage("There was an error!  Please try again.");
         console.log(err);
       });
 

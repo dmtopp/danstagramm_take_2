@@ -1,11 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('uploadController', function($scope, Upload, $state, $http, $cookies) {
-  // var all = $cookies.getAll();
-  // console.log(all);
-
-  console.log($cookies.get('loggedIn'));
-
   if (!$cookies.get('loggedIn')) {
     $state.go('parent.login-signup');
   }
@@ -39,7 +34,6 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
           $state.go('parent.home');
         }, function(err){
           $scope.changeMessage("There was an error!  Please try again.");
-          console.log('oh no!');
           console.log(err);
         });
 

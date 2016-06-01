@@ -28,6 +28,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       })
     },
     function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
   }
@@ -52,6 +53,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       }
 
     }, function(err) {
+      $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
   }
