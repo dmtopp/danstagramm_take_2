@@ -4,7 +4,6 @@ require('dotenv').config();
 var express    = require('express'),
     bodyParser = require('body-parser'),
     exphbs     = require('express-handlebars'),
-    // jwt        = require('jsonwebtoken'),
     app        = express();
 
 // require the database
@@ -26,10 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // map controllers here
 // --------------------
-// app.get('/', function(req, res, next){
-//   res.sendFile(__dirname + '/views/index.html');
-// })
-
 app.use('/', require('./controllers/root_controller'));
 app.use('/users', require('./controllers/users_controller'));
 app.use('/photos', require('./controllers/photos_controller'));

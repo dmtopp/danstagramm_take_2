@@ -79,5 +79,13 @@ PhotoController.route('/like')
     });
   });
 
+PhotoController.route('/:userId')
+  .get(function(req, res, next) {
+    Photo.find({ uploader_id: req.params.userId }, function(err, photos) {
+      if (err) console.log(err);
+      else res.send({ photos: photos, success: true });
+    })
+  })
+
 
 module.exports = PhotoController;

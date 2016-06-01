@@ -2,7 +2,7 @@
   <div ng-repeat="photo in photos">
     <img ng-src="{{ photo.file }}" />
     <p>{{ photo.caption }}</p>
-    <p>Uploaded by {{ photo.uploader }}.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
+    <p>Uploaded by <span ng-click='getUserPhotos()'>{{ photo.uploader }}</span>.  <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length - 1 }} likes.</p>
     <p>{{ photo.comments.length }} comments.</p>
    </div>
 </div>
