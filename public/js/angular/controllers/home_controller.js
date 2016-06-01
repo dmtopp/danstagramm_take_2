@@ -7,34 +7,32 @@ App.controller('homeController', function($scope, $http, $state, $cookies){
   if (!$cookies.get('loggedIn')) {
     $scope.changeMessage('Please log in or sign up to use Danstagramm!');
     $state.go('parent.login-signup');
+  } else {
+    // http request to get feed
+    $http({
+      method: 'get',
+      url: '/photos/all'
+    }).then(
+    function(res){
+      $scope.photos = res.data.photos;
+      var userId = $cookies.get('userId');
+
+      // check to see if the user's id is stored in the array of likes from the db
+      $scope.photos.forEach(function(photo) {
+        if (photo.likes.indexOf(userId) >= 0) {
+          photo.liked = true;
+          photo.heart = '♥';
+        } else {
+          photo.liked = false;
+          photo.heart = '♡';
+        }
+      })
+    },
+    function(err) {
+      console.log(err);
+    });
   }
 
-  // http request to get feed
-  $http({
-    method: 'get',
-    url: '/photos/all'
-  }).then(function(res){
-    $scope.photos = res.data.photos;
-
-
-    var userId = $cookies.get('userId');
-
-    // check to see if the user's id is stored in the array of likes from the db
-    $scope.photos.forEach(function(photo) {
-      if (photo.likes.indexOf(userId) >= 0) {
-        photo.liked = true;
-        photo.heart = '♥';
-      } else {
-        photo.liked = false;
-        photo.heart = '♡';
-      }
-    })
-
-
-
-  }, function(err) {
-    console.log(err);
-  });
 
 
 
