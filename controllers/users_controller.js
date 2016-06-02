@@ -23,7 +23,7 @@ UserController.route('/login')
           // console.log('request pwd: ' + req.body.password);
           // console.log('db pwd: ' + person.password);
           if (matched) {
-            response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 5 });
+            response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 60*60 });
             response.message = "Success!";
             response.success = true;
             response.id = person._id;

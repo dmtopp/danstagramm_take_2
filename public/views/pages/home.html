@@ -6,7 +6,7 @@
     <p ng-repeat="comment in photo.comments | limitTo:photo.commentQty"><b>{{ comment.owner }}</b> {{ comment.comment }}</p>
     <a ng-hide="photo.expanded" ng-click="showComments()">Show all {{ photo.comments.length }} comments</a>
     <a ng-show="photo.expanded" ng-click="hideComments()">Hide comments</a>
-    <input type="text" ng-model="photo.comment" /><button ng-click="commentSubmit()">Submit</button>
+    <input type="text" placeholder="Add a comment" ng-model="photo.comment" /><button ng-click="commentSubmit()">Submit</button>
   </div>
   <button ng-show="photos.length > quantity" ng-click="showMore()">Show more</button>
 </div>
