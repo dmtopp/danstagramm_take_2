@@ -1,11 +1,11 @@
 // require dependencies
 // --------------------
-var express    = require('express'),
-    UserController        = express.Router(),
-    bcrypt     = require('bcryptjs'),
-    mongoose   = require('mongoose'),
-    jwt        = require('jsonwebtoken'),
-    User       = require('../models/User');
+var express        = require('express'),
+    UserController = express.Router(),
+    bcrypt         = require('bcryptjs'),
+    mongoose       = require('mongoose'),
+    jwt            = require('jsonwebtoken'),
+    User           = require('../models/User');
 
 
 
@@ -23,7 +23,7 @@ UserController.route('/login')
           // console.log('request pwd: ' + req.body.password);
           // console.log('db pwd: ' + person.password);
           if (matched) {
-            response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 60*60 });
+            response.token = jwt.sign({ username: req.body.username }, process.env.SECRET, { expiresIn: 5 });
             response.message = "Success!";
             response.success = true;
             response.id = person._id;

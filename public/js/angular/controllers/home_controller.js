@@ -5,36 +5,48 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   $http.defaults.headers.common.Authorization = $cookies.get('token');
   $scope.quantity = 10;
 
-  if (!$cookies.get('loggedIn')) {
-    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
-    $state.go('parent.login-signup');
-  } else {
-    // http request to get feed
+  $scope.getPhotos = function(url) {
     $http({
       method: 'get',
-      url: '/photos/all'
-    }).then(function(res){
-      $scope.photos = res.data.photos;
-      var userId = $cookies.get('userId');
+      url: '/photos/' + url
+    }).then(function(res) {
+      if (!res.data.err) {
+        $scope.photos = res.data.photos;
+        var userId = $cookies.get('userId');
 
-      // check to see if the user's id is stored in the array of likes from the db
-      $scope.photos.forEach(function(photo) {
-        photo.commentQty = 0;
-        photo.expanded = false;
-        if (photo.likes.indexOf(userId) >= 0) {
-          photo.liked = true;
-          photo.heart = '♥';
-        } else {
-          photo.liked = false;
-          photo.heart = '♡';
-        }
-      })
+        // check to see if the user's id is stored in the array of likes from the db
+        $scope.photos.forEach(function(photo) {
+          photo.commentQty = 0;
+          photo.expanded = false;
+          if (photo.likes.indexOf(userId) >= 0){
+            photo.liked = true;
+            photo.heart = '♥';
+          } else{
+            photo.liked = false;
+            photo.heart = '♡';
+          }
+        })
+      } else {
+        $state.go("parent.logout", { message: 'Your session has expired! Please log in again.' });
+      }
+
     },
     function(err) {
       $scope.changeMessage("There was an error!  Please try again.");
       console.log(err);
     });
+
   }
+
+  if (!$cookies.get('loggedIn')) {
+    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
+    $state.go('parent.login-signup');
+  } else {
+    $scope.getPhotos('all');
+  }
+
+
+
 
   $scope.likeHandler = function() {
     var userId = $cookies.get('userId');

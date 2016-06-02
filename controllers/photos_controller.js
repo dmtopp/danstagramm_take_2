@@ -15,20 +15,19 @@ PhotoController.use(function(req, res, next) {
   if (token) {
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
       if (err) {
-        res.send(err);
+        res.send({ err: err, success: false });
       } else {
         req.decoded = decoded;
         next();
       }
     })
   } else {
-    return res.send('No token!');
+    return res.send({ err: 'No token!', success: false });
   }
 })
 
 PhotoController.route('/upload')
   .post(function(req, res, next){
-    // console.log('The /upload route has recieved a post request!');
     // save req.body.file in the database
     Photo.create(req.body, function(err, Photo){
       if (err) console.log(err);

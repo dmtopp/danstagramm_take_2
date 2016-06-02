@@ -32,9 +32,10 @@ App.config(function($stateProvider, $urlRouterProvider){
       controller  : 'updateController'
     })
     .state('parent.logout', {
-      url: '/logout',
+      url         : '/logout',
       templateUrl : '/views/pages/home.html',
-      controller  : 'logoutController'
+      controller  : 'logoutController',
+      params      : { message: "You are now logged out.  See ya around!" }
     })
     .state('parent.about', {
       url: '/about',
