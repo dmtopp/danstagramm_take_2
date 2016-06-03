@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('userPageController', function($scope, $http, $state, $cookies, $stateParams, $controller) {
   $http.defaults.headers.common.Authorization = $cookies.get('token');

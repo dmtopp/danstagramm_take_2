@@ -37,6 +37,10 @@ img {
   width: auto;
 }
 
+.masonry-brick.loaded {
+  display: block;
+}
+
 a {
   text-decoration: none;
   color: $dark-grey;
