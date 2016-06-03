@@ -2760,7 +2760,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
   return upload;
 }]);
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('aboutController', function($scope, $http, $state, $cookies) {
 
@@ -2769,7 +2769,7 @@ App.controller('aboutController', function($scope, $http, $state, $cookies) {
 
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
@@ -2888,9 +2888,13 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
 
     this.photo.comment = '';
   }
+
+  $scope.refresh = function(){
+    angularGridInstance.gallery.refresh();
+  }
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('loginSignupController', function($scope, $http, $state, $cookies){
   $scope.loginSubmit = function(){
@@ -2969,7 +2973,7 @@ App.controller('loginSignupController', function($scope, $http, $state, $cookies
 
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('logoutController', function($scope, $http, $state, $cookies, $stateParams) {
   $cookies.remove('token');
@@ -2984,7 +2988,7 @@ App.controller('logoutController', function($scope, $http, $state, $cookies, $st
 
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('parentController', function($scope, $state, $cookies) {
   $state.go('parent.about');
@@ -3003,7 +3007,7 @@ App.controller('parentController', function($scope, $state, $cookies) {
 
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('updateController', function($scope, $http, $state, $cookies){
   if (!$cookies.get('loggedIn')) {
@@ -3047,7 +3051,7 @@ App.controller('updateController', function($scope, $http, $state, $cookies){
   };
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('uploadController', function($scope, Upload, $state, $http, $cookies) {
   if (!$cookies.get('loggedIn')) {
@@ -3093,7 +3097,7 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
 
 });
 
-var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('userPageController', function($scope, $http, $state, $cookies, $stateParams, $controller) {
   $http.defaults.headers.common.Authorization = $cookies.get('token');

@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('loginSignupController', function($scope, $http, $state, $cookies){
   $scope.loginSubmit = function(){

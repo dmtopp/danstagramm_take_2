@@ -1,4 +1,4 @@
-<div class='photo row' ng-repeat="photo in photos | limitTo:quantity">
+<!-- <div class='photo row' ng-repeat="photo in photos | limitTo:quantity">
   <div class="six columns">
     <div class="photo-background">
       <img ng-src="{{ photo.file }}" />
@@ -17,10 +17,6 @@
     <input type="text" placeholder="Add a comment" ng-model="photo.comment" /><button ng-click="commentSubmit()">Submit</button>
   </div>
 
-</div>
-<!-- <div masonry column-width="400">
-  <div class="masonry-brick" ng-repeat="photo in photos | limitTo:quantity">
-    <img ng-src="{{ photo.file }}" />
-  </div>
-</div>
-<button ng-show="photos.length > quantity" ng-click="showMore()">Show more</button> -->
+</div> -->
+
+<button ng-show="photos.length > quantity" ng-click="showMore()">Show more</button>

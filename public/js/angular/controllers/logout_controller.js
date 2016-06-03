@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['angularGrid', 'ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('logoutController', function($scope, $http, $state, $cookies, $stateParams) {
   $cookies.remove('token');
