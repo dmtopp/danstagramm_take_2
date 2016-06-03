@@ -13,7 +13,9 @@
   "author": "dan",
   "license": "MIT",
   "dependencies": {
+    "angular-masonry": "^0.16.0",
     "angular-route": "^1.5.3",
+    "angular-ui-router": "^0.3.0",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.0",

@@ -1,8 +1,5 @@
-<div class="row">
-
+<header class="row">
   <nav class="twelve columns">
-
-    <h1>DANSTAGRAMM</h1>
     <a ng-show="loggedIn" ui-sref="parent.home"><button type="button">home</button></a>
     <a ng-show="loggedIn" ui-sref="parent.upload"><button type="button">upload</button></a>
     <a ng-hide="loggedIn" ui-sref="parent.login-signup"><button type="button">login</button></a>
@@ -10,10 +7,21 @@
     <a ng-show="loggedIn" ui-sref="parent.update"><button type="button">update info</button></a>
     <a ng-show="loggedIn" ui-sref="parent.logout"><button type="button">log out</button></a>
 
-    <small>{{ parentMessage }}</small>
 
-    </p>
   </nav>
+
+</header>
+
+<div class="row title">
+  <h1>DANSTAGRAMM</h1>
+  <p>{{ parentMessage }}</p>
 </div>
 
 <div ui-view></div>
+
+<footer>
+  <p>
+    Thanks for visiting!
+  </p>
+
+</footer>

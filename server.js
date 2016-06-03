@@ -13,6 +13,7 @@ require('./db/database.js');
 // set views and public folders here
 // ---------------------------------
 app.use(express.static(__dirname + '/public'));
+app.use('/scripts', express.static(__dirname + '/node_modules'));
 app.set('views', __dirname + '/views');
 
 

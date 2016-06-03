@@ -1,4 +1,4 @@
-var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+var App = App || angular.module('App', ['wu.masonry', 'ui.router', 'ngFileUpload', 'ngCookies']);
 
 App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
