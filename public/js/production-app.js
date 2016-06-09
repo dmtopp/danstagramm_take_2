@@ -2882,6 +2882,14 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
 
     this.photo.comment = '';
   }
+
+  $scope.hoverIn = function() {
+    this.isActive = true;
+  };
+
+  $scope.hoverOut = function() {
+    this.isActive = false;
+  }
 });
 
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);

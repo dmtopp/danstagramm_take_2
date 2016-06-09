@@ -63,6 +63,24 @@ nav {
     width: 100% !important;
     height: auto !important; }
 
+.photo-background {
+  position: relative;
+  min-height: 100px;
+  background: #161616; }
+  .photo-background .photo-data {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: snow;
+    height: 100%;
+    width: 100%;
+    padding-top: 20px; }
+    .photo-background .photo-data button {
+      float: right; }
+    .photo-background .photo-data a {
+      color: white; }
+
 footer {
   position: absolute;
   bottom: 0;

@@ -1,21 +1,20 @@
 <div id='photos'>
-  <!-- <div class='photo-background' ng-repeat="photo in photos | limitTo:quantity"> -->
-    <img ng-src="{{ photo.file }}" ng-repeat="photo in photos | limitTo:quantity" />
-    <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.</p>
-    <button ng-click="likeHandler()">{{ photo.heart }} {{ photo.likes.length }}</button>
-  <!-- </div> -->
+  <div class='photo-background' ng-repeat="photo in photos | limitTo:quantity" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+    <img ng-src="{{ photo.file }}" />
+    <div ng-show="isActive" class="photo-data">
+      <button ng-click="likeHandler()">{{ photo.heart }} {{ photo.likes.length }}</button>
+      <p><a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a></p>
+      <p>{{ photo.caption }}</p>
 
+      <!-- <p ng-repeat="comment in photo.comments | limitTo:photo.commentQty"><b>{{ comment.owner }}</b> {{ comment.comment }}</p> -->
+      <p ang-click="showComments()">{{ photo.comments.length }} comments</p>
 
-  <!-- <div class="six columns">
-    <p>{{ photo.caption }}</p>
+      <!-- <a ng-show="photo.expanded" ng-click="hideComments()">Hide comments</a> -->
+      <!-- <input type="text" placeholder="Add a comment" ng-model="photo.comment" /><button ng-click="commentSubmit()">Submit</button> -->
+    </div>
 
-    <p ng-repeat="comment in photo.comments | limitTo:photo.commentQty"><b>{{ comment.owner }}</b> {{ comment.comment }}</p>
-    <a ng-hide="photo.expanded" ng-click="showComments()">Show all {{ photo.comments.length }} comments</a>
-    <a ng-show="photo.expanded" ng-click="hideComments()">Hide comments</a>
-    <input type="text" placeholder="Add a comment" ng-model="photo.comment" /><button ng-click="commentSubmit()">Submit</button>
-  </div> -->
+  </div>
 
 </div>
-
 
 <button ng-show="photos.length > quantity" ng-click="showMore()">Show more</button>

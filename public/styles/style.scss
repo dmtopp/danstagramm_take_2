@@ -95,6 +95,32 @@ nav {
   }
 }
 
+.photo-background {
+  position: relative;
+  min-height: 100px;
+  background: $black;
+
+  .photo-data {
+    background-color: $dark-grey;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: $white;
+    height: 100%;
+    width: 100%;
+    padding-top: 20px;
+
+
+    button {
+      float: right;
+    }
+
+    a {
+      color: white;
+    }
+  }
+}
+
 footer {
   position: absolute;
   bottom: 0;
