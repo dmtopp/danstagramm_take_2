@@ -1,9 +1,9 @@
-<div class='photo row'>
-  <div class='photo-background' ng-repeat="photo in photos | limitTo:quantity">
-    <img ng-src="{{ photo.file }}" />
-    <!-- <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.</p>
-    <button ng-click="likeHandler()">{{ photo.heart }}</button> {{ photo.likes.length }} likes.</p> -->
-  </div>
+<div id='photos'>
+  <!-- <div class='photo-background' ng-repeat="photo in photos | limitTo:quantity"> -->
+    <img ng-src="{{ photo.file }}" ng-repeat="photo in photos | limitTo:quantity" />
+    <p>Uploaded by <a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a>.</p>
+    <button ng-click="likeHandler()">{{ photo.heart }} {{ photo.likes.length }}</button>
+  <!-- </div> -->
 
 
   <!-- <div class="six columns">
@@ -17,19 +17,5 @@
 
 </div>
 
-<!-- <div class='photo row'>
-  <div class="four columns">
-    <img ng-src="{{ photo.file }}" />
-  </div>
-
-  <div class="four columns">
-
-  </div>
-
-  <div class="four columns">
-
-  </div>
-
-</div> -->
 
 <button ng-show="photos.length > quantity" ng-click="showMore()">Show more</button>
