@@ -2762,7 +2762,7 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
-  $scope.quantity = 10;
+  $scope.quantity = 1;
   // how many photos to skip over in the database
   $scope.skip = 0;
   $scope.photos = [];
@@ -2792,9 +2792,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
           $scope.photos.push(photo);
         })
 
-        console.log(photos);
-        // $scope.photos.concat(['lol', 'wat']);
-        console.log($scope.photos);
       } else {
         $state.go("parent.logout", { message: 'Your session has expired! Please log in again.' });
       }
@@ -2847,8 +2844,8 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     if ($scope.quantity >= $scope.photos.length) {
       $scope.changeMessage("There are no more photos to display!");
     } else {
-      $scope.quantity += 10;
-      $scope.skip += 10;
+      $scope.quantity += 1;
+      $scope.skip += 2;
       $scope.getPhotos('all/' + $scope.skip);
 
     }

@@ -38,9 +38,9 @@ PhotoController.route('/upload')
 
 PhotoController.route('/all/:skip?')
   .get(function(req, res, next) {
-    var skip = req.params.skip || 0;
+    var skip = parseInt(req.params.skip) || 0;
 
-    Photo.find({}).sort({'date': -1}).skip(skip).limit(20).exec(function(err, photos){
+    Photo.find({}).sort({'date': -1}).skip(skip).limit(2).exec(function(err, photos){
       if (err) console.log(err);
       else {
         var photoData = photos.map(function(photo){
