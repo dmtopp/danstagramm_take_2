@@ -6,12 +6,14 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   $scope.quantity = 10;
 
   $scope.getPhotos = function(url) {
+    console.log('/photos/' + url);
     $http({
       method: 'get',
       url: '/photos/' + url
     }).then(function(res) {
       if (!res.data.err) {
         $scope.photos = res.data.photos;
+        // $scope.columns = [[], [], []];
         var userId = $cookies.get('userId');
 
         // check to see if the user's id is stored in the array of likes from the db
@@ -25,6 +27,9 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
             photo.liked = false;
             photo.heart = '♡';
           }
+          // var column = Math.floor(Math.random() * $scope.columns.length);
+          // $scope.columns[column].push(photo);
+
         })
       } else {
         $state.go("parent.logout", { message: 'Your session has expired! Please log in again.' });
@@ -43,6 +48,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     $state.go('parent.login-signup');
   } else {
     $scope.getPhotos('all');
+    console.log('this would be getting all photos right now');
   }
 
 
