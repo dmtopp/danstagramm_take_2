@@ -27,7 +27,8 @@ App.controller('uploadController', function($scope, Upload, $state, $http, $cook
                   uploader_id: $cookies.get('userId'),
                   caption: $scope.caption,
                   likes: [],
-                  comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }]
+                  comments: [{ comment: "Great!", owner: "Dan", owner_id: "1" }],
+                  date: Date.now()
                 }
         }).then(function(res){
           $scope.changeMessage("Upload successful!");

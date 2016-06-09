@@ -7,7 +7,8 @@ var photoSchema = new mongoose.Schema({
   uploader_id: String,
   caption: String,
   likes: Array,
-  comments: Array
+  comments: Array,
+  date: Date
 })
 
 module.exports = mongoose.model('Photo', photoSchema);

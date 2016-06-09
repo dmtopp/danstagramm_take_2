@@ -4,6 +4,9 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
   $scope.quantity = 10;
+  // how many photos to skip over in the database
+  $scope.skip = 0;
+  $scope.photos = [];
 
   $scope.getPhotos = function(url) {
     console.log('/photos/' + url);
@@ -12,12 +15,11 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       url: '/photos/' + url
     }).then(function(res) {
       if (!res.data.err) {
-        $scope.photos = res.data.photos;
-        // $scope.columns = [[], [], []];
+        var photos = res.data.photos;
         var userId = $cookies.get('userId');
 
         // check to see if the user's id is stored in the array of likes from the db
-        $scope.photos.forEach(function(photo) {
+        photos.forEach(function(photo) {
           photo.commentQty = 0;
           photo.expanded = false;
           if (photo.likes.indexOf(userId) >= 0){
@@ -27,10 +29,10 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
             photo.liked = false;
             photo.heart = '♡';
           }
-          // var column = Math.floor(Math.random() * $scope.columns.length);
-          // $scope.columns[column].push(photo);
 
+          $scope.photos.push(photo);
         })
+
       } else {
         $state.go("parent.logout", { message: 'Your session has expired! Please log in again.' });
       }
@@ -84,6 +86,9 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
       $scope.changeMessage("There are no more photos to display!");
     } else {
       $scope.quantity += 10;
+      $scope.skip += 10;
+      $scope.getPhotos('all/' + $scope.skip);
+
     }
   }
 

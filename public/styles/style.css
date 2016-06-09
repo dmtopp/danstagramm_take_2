@@ -72,14 +72,15 @@ nav {
     position: absolute;
     top: 0;
     left: 0;
-    color: snow;
+    color: rgba(255, 250, 250, 0.9);
     height: 100%;
     width: 100%;
-    padding-top: 20px; }
+    padding-top: 20px;
+    padding-bottom: -20px; }
     .photo-background .photo-data button {
       float: right; }
     .photo-background .photo-data a {
-      color: white; }
+      color: rgba(255, 250, 250, 0.9); }
 
 footer {
   position: absolute;

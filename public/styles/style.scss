@@ -1,4 +1,4 @@
-$white: rgba(255, 250, 250, 1);
+$white: rgba(255, 250, 250, 0.9);
 $dark-grey: rgba(0, 0, 0, 0.6);
 $light-grey: #E1E3E4;
 $dark-blue: #233D4D;
@@ -35,7 +35,6 @@ button, .button {
 
 img {
   max-height: 300px;
-  // max-width: 300px;
   width: auto;
 }
 
@@ -109,6 +108,7 @@ nav {
     height: 100%;
     width: 100%;
     padding-top: 20px;
+    padding-bottom: -20px;
 
 
     button {
@@ -116,7 +116,7 @@ nav {
     }
 
     a {
-      color: white;
+      color: $white;
     }
   }
 }
@@ -142,6 +142,7 @@ footer {
   column-count:         2;
   }
 }
+
 @media (max-width: 400px) {
   #photos {
   -moz-column-count:    1;
