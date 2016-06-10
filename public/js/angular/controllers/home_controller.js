@@ -1,6 +1,6 @@
 var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
 
-App.controller('homeController', function($scope, $http, $state, $cookies) {
+App.controller('homeController', function($scope, $http, $state, $cookies, photoService) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
   $scope.quantity = 15;
@@ -8,11 +8,11 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   $scope.skip = 0;
   $scope.photos = [];
 
-  $scope.getPhotos = function(url) {
-    $http({
-      method: 'get',
-      url: '/photos/' + url
-    }).then(function(res) {
+  if (!$cookies.get('loggedIn')) {
+    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
+    $state.go('parent.login-signup');
+  } else {
+    photoService.getPhotos('all').then(function(res) {
       if (!res.data.err) {
         var photos = res.data.photos;
         var userId = $cookies.get('userId');
@@ -28,27 +28,22 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
             photo.liked = false;
             photo.heart = '♡';
           }
-
           $scope.photos.push(photo);
         })
+
 
       } else {
         $state.go("parent.logout", { message: 'Your session has expired! Please log in again.' });
       }
-
     },
     function(err) {
       $scope.changeMessage("There was an error!  Please try again.");
-      console.log(err);
+      reject(err);
     });
 
-  }
-
-  if (!$cookies.get('loggedIn')) {
-    $scope.changeMessage('Please log in or sign up to use Danstagramm!');
-    $state.go('parent.login-signup');
-  } else {
-    $scope.getPhotos('all');
+    // newPhotos.forEach(function(photo) {
+    //   $scope.photos.push(photo);
+    // });
   }
 
   $scope.likeHandler = function() {

@@ -40,23 +40,16 @@ PhotoController.route('/all/:skip?')
   .get(function(req, res, next) {
     var skip = parseInt(req.params.skip) || 0;
 
-    Photo.find({}).sort({'date': -1}).skip(skip).limit(30).exec(function(err, photos){
+    Photo.find({})
+         .sort({'date': -1})
+         .skip(skip)
+         .limit(30)
+         .exec(function(err, photos){
       if (err) console.log(err);
       else {
-        var photoData = photos.map(function(photo){
-          return { file: photo.file,
-                   _id: photo._id,
-                   uploader: photo.uploader,
-                   uploaderId: photo.uploader_id,
-                   caption: photo.caption,
-                   likes: photo.likes,
-                   comments: photo.comments }
-        })
-        res.send({ photos: photos,
-                   success: true });
+        res.send({ photos: photos, success: true });
       }
     })
-    // send back a particular photo or all photos in the user's feed
   })
 
 PhotoController.route('/like')
@@ -79,9 +72,15 @@ PhotoController.route('/like')
     });
   });
 
-PhotoController.route('/:userId')
+PhotoController.route('/:userId/:skip?')
   .get(function(req, res, next) {
-    Photo.find({ uploader_id: req.params.userId }, function(err, photos) {
+    var skip = parseInt(req.params.skip) || 0;
+
+    Photo.find({ uploader_id: req.params.userId })
+         .sort({'date': -1})
+         .skip(skip)
+         .limit(30)
+         .exec(function(err, photos) {
       if (err) console.log(err);
       else res.send({ photos: photos, success: true });
     })
