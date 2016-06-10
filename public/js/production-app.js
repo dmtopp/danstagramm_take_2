@@ -46,6 +46,12 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/user-page/:uploader_id',
       templateUrl : '/views/pages/home.html',
       controller  : 'userPageController'
+    })
+    .state('parent.photoHighlight', {
+      url         : '/photo-highlight',
+      templateUrl : '/views/pages/photo_highlight.html',
+      controller  : 'photoHighlightController',
+      params      : { photo: 'hiii!' }
     });
 });
 
@@ -2768,7 +2774,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   $scope.photos = [];
 
   $scope.getPhotos = function(url) {
-    console.log('/photos/' + url);
     $http({
       method: 'get',
       url: '/photos/' + url
@@ -2809,7 +2814,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     $state.go('parent.login-signup');
   } else {
     $scope.getPhotos('all');
-    console.log('this would be getting all photos right now');
   }
 
 
@@ -2818,6 +2822,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
   $scope.likeHandler = function() {
     var userId = $cookies.get('userId');
     var self = this;
+    console.log(this);
 
     $http({
       method: 'post',
@@ -2865,6 +2870,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     var userId = $cookies.get('userId');
     var username = $cookies.get('username');
     var self = this;
+    console.log(this);
 
     $http({
       method: 'post',
@@ -2886,7 +2892,7 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     });
 
     this.photo.comment = '';
-  }
+  };
 
   $scope.hoverIn = function() {
     this.isActive = true;
@@ -2894,6 +2900,10 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
 
   $scope.hoverOut = function() {
     this.isActive = false;
+  };
+
+  $scope.highlightPhoto = function() {
+    $state.go("parent.photoHighlight", { photo: this.photo });
   }
 });
 
@@ -3006,6 +3016,19 @@ App.controller('parentController', function($scope, $state, $cookies) {
   $scope.changeMessage = function(message) {
     $scope.parentMessage = message;
   };
+
+
+});
+
+var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies']);
+
+App.controller('photoHighlightController', function($scope, $http, $state, $cookies, $stateParams, $controller) {
+  $http.defaults.headers.common.Authorization = $cookies.get('token');
+
+  $controller('homeController', { $scope: $scope });
+
+  $scope.photo = $stateParams.photo;
+  console.log($stateParams.photo);
 
 
 });

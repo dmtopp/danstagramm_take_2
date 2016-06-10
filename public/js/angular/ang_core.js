@@ -46,5 +46,11 @@ App.config(function($stateProvider, $urlRouterProvider){
       url: '/user-page/:uploader_id',
       templateUrl : '/views/pages/home.html',
       controller  : 'userPageController'
+    })
+    .state('parent.photoHighlight', {
+      url         : '/photo-highlight',
+      templateUrl : '/views/pages/photo_highlight.html',
+      controller  : 'photoHighlightController',
+      params      : { photo: 'hiii!' }
     });
 });

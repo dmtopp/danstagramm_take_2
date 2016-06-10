@@ -1,5 +1,5 @@
 <div id='photos'>
-  <div class='photo-background' ng-repeat="photo in photos | limitTo:quantity" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+  <div class='photo-background' ng-repeat="photo in photos | limitTo:quantity" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" ng-click="highlightPhoto()">
     <img ng-src="{{ photo.file }}" />
     <div ng-show="isActive" class="photo-data">
       <div class="photo-data-inside">
