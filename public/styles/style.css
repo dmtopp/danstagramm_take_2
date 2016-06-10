@@ -6,7 +6,8 @@ html {
   position: relative; }
 
 body {
-  font-family: 'Bitter', serif; }
+  font-family: 'Bitter', serif;
+  color: #555; }
 
 .container {
   background-color: #233D4D;
@@ -67,20 +68,24 @@ nav {
   position: relative;
   min-height: 100px;
   background: #161616; }
-  .photo-background .photo-data {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: rgba(255, 250, 250, 0.9);
-    height: 100%;
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: -20px; }
-    .photo-background .photo-data button {
-      float: right; }
-    .photo-background .photo-data a {
-      color: rgba(255, 250, 250, 0.9); }
+
+.photo-data {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(255, 250, 250, 0.9);
+  height: 100%;
+  width: 100%; }
+  .photo-data p {
+    margin-top: 12px;
+    margin-left: 2px; }
+  .photo-data button {
+    float: right;
+    margin-right: 2px;
+    margin-top: 2px; }
+  .photo-data a {
+    color: rgba(255, 250, 250, 0.9); }
 
 footer {
   position: absolute;

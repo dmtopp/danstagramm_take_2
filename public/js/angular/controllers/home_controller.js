@@ -3,13 +3,12 @@ var App = App || angular.module('App', ['ui.router', 'ngFileUpload', 'ngCookies'
 App.controller('homeController', function($scope, $http, $state, $cookies) {
   // set our http request headers to contain our jwt
   $http.defaults.headers.common.Authorization = $cookies.get('token');
-  $scope.quantity = 1;
+  $scope.quantity = 15;
   // how many photos to skip over in the database
   $scope.skip = 0;
   $scope.photos = [];
 
   $scope.getPhotos = function(url) {
-    console.log('/photos/' + url);
     $http({
       method: 'get',
       url: '/photos/' + url
@@ -50,7 +49,6 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     $state.go('parent.login-signup');
   } else {
     $scope.getPhotos('all');
-    console.log('this would be getting all photos right now');
   }
 
 
@@ -85,8 +83,8 @@ App.controller('homeController', function($scope, $http, $state, $cookies) {
     if ($scope.quantity >= $scope.photos.length) {
       $scope.changeMessage("There are no more photos to display!");
     } else {
-      $scope.quantity += 1;
-      $scope.skip += 2;
+      $scope.quantity += 15;
+      $scope.skip += 30;
       $scope.getPhotos('all/' + $scope.skip);
 
     }
