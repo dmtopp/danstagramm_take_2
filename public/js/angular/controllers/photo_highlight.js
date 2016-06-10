@@ -36,6 +36,7 @@ App.controller('photoHighlightController', function($scope, $http, $state, $cook
   };
 
   $scope.showComments = function() {
+    console.log(this);
     this.photo.commentQty = this.photo.comments.length;
     this.photo.expanded = true;
   }
