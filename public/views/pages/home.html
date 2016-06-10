@@ -6,7 +6,7 @@
         <button ng-click="likeHandler()">{{ photo.heart }} {{ photo.likes.length }}</button>
         <p><a ui-sref="parent.user-page({ uploader_id: photo.uploader_id })">{{ photo.uploader }}</a></p>
         <p>{{ photo.caption }}</p>
-        <p ng-click="highlightPhoto()">{{ photo.comments.length }} comments</p>
+        <a ng-click="highlightPhoto()">{{ photo.comments.length }} comments</a>
       </div>
 
     </div>
